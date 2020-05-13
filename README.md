@@ -5,18 +5,20 @@
 ※ 他ファイルはDockerのコンテナを立ち上げるに必要なものになるので、基本的に編集は行わない
 
 # .envの準備
-.envファイルにて環境設定の切り分けを行っているため、まず環境ファイルの設定を行う必要がある
-```
-cp src/dot_env.sample src/.env
-```
 その後src/.envの内容を編集する
 ### developmentの場合
 ```
-DJANGO_SETTINGS_MODULE=app.settings.development
+DJANGO_SETTINGS_MODULE=config.settings.local
 ```
 ### productionの場合
 ```
-DJANGO_SETTINGS_MODULE=app.settings.production
+DJANGO_SETTINGS_MODULE=config.settings.production
+```
+
+# dbの準備
+```
+docker-compose run python python manage.py migrate
+docker-compose run python python manage.py shell -c "from django.contrib.auth import get_user_model; get_user_model().objects.create_superuser('admin', 'admin@example.com', 'adminpass');"
 ```
 
 # Django-Docker
