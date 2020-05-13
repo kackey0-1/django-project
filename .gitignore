@@ -1,0 +1,12 @@
+/mysql
+__pycache__/
+*.log
+src/ipython_profile
+*.swp
+*.swo
+src/.env
+.DS_Store
+.idea/
+html/
+src/test-contents/output/
+src/test-contents/pdf_buffer/
