@@ -47,9 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'django_extensions',
-    'bootstrap4',
-    'auth_app.apps.AuthAppConfig',
+
+    # My applications
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,8 +81,6 @@ TEMPLATES = [
             'libraries': {
                 'parse': 'app.modules.filters.common_filter.parse',
                 'calc': 'app.modules.filters.common_filter.calc',
-                # 'code_of_documents': 'app.code_translate_filter.templatetags.code_of_documents',
-                # 'code_of_documents': 'app.code_translate_filter.templatetags.code_of_documents',
             },
             'builtins': [
                'bootstrap4.templatetags.bootstrap4',
@@ -112,6 +110,12 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
+
+##################
+# Authentication #
+##################
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -153,11 +157,11 @@ STATIC_URL = '/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # ログインページURL
-LOGIN_URL = '/auth/login/'
+LOGIN_URL = '/accounts/login/'
 # ログイン後のリダイレクト先
-LOGIN_REDIRECT_URL = '/clients/'
+LOGIN_REDIRECT_URL = '/accounts/profile'
 # ログアウト後のリダイレクト先
-LOGOUT_REDIRECT_URL = '/auth/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 
 LOGGING = {
