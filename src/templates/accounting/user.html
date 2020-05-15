@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/accounting/user.css' %}">{% endblock %}
+{% block content %}
+<div id="sideBar_wrapper" class="sideBar">
+    {% include "side-bar.html" %}
+</div>
+<div class="d-flex flex-row flex-wrap main-body">
+    <main class="col-12">
+        {% if save_message %}
+            <div class="save-message alert-{{ alert_type }}" style="text-align: center;">
+                {{ save_message }}
+            </div>
+        {% endif %}
+        <form class="form_area" action="{% url 'accounting:user' %}" method="get">
+            <div id="search">
+                <div class="form-group">
+                    <label class="sr-only">ふりがな</label>
+                    <input type="text" name="kana" value="{{ parameter.kana }}" class="form-control" placeholder="ふりがな">
+                </div>
+                <button type="submit" class="btn-search btn-outline-dark mb-2 "><i class="sub-icon fas fa-search"></i>検索</button>
+            </div>
+        </form>
+        
+        <form action="{% url 'accounting:user_choice_delete' %}" method="post">
+            {% csrf_token %}
+            <div class="wrapper_button">
+                {% if employee_groups %}
+                    <a href="{% url 'accounting:user_create' %}">
+                        <button type="button" class="btn btn-outline-warning btn-md"><i class="sub-icon fas fa-user-plus"></i>新規アカウント作成</button>
+                    </a>
+                {% endif %}
+                <button type="submit" class="btn-choice-delete btn btn-outline-warning btn-md"><i class="sub-icon fas fa-trash-alt"></i>選択消去</button>
+                <a href="{% url 'accounting:userExportExcel' %}">
+                    <button type="button" class="btn btn-outline-warning btn-md"><i class="sub-icon fas fa-download"></i>エクスポート</button>
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>選択</th>
+                            <th>社員ID</th>
+                            <th>氏名</th>
+                            <th>ふりがな</th>
+                            <th>職種</th>
+                            <th>ステータス</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% if user.status != 2 %}
+                                        <input type="checkbox" name="user_id[]" value="{{ user.id }}">
+                                    {% endif %}
+                                    </td>
+                                <td>{{ user.code|default:'' }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.kana }}</td>
+                                <td>{{ user.occupation|default:'' }}</td>
+                                {% if user.status == 1 or user.status == 2 %}
+                                    <td>在籍</td>
+                                {% elif user.status == 3 %}
+                                    <td>契約</td>
+                                {% else %}
+                                    <td>退職</td>
+                                {% endif %}
+                                <td>
+                                    <!--
+                                        user.status=2 をマスターデータとする。 
+                                        ユーザーが一人もいない状態だとエラーになるため
+                                        マスターユーザーは削除出来ないようにする 
+                                    -->
+                                    {% if user.status != 2 %}
+                                        <a class="edit" href="{% url 'accounting:user_edit' user.id %}"><button type="button" class="btn-edit btn_table btn-outline-dark btn-sm">編集</button></a>
+                                    {% endif %}
+                                </td> 
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}
+{% block script %}<script type="text/javascript" src="{% static 'js/accounting/user.js' %}"></script>{% endblock %}

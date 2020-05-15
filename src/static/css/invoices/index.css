@@ -1,0 +1,9 @@
+option:first-child{
+    display: none;
+}
+
+#_message-box {
+    padding: 15px;
+    margin: 15px;
+    text-align: center;
+}

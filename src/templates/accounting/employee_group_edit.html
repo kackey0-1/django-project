@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/accounting/employee_group_edit.css' %}">{% endblock %}
+{% block content %}
+<div id="sideBar_wrapper" class="sideBar">
+    {% include "side-bar.html" %}
+</div>
+<div class="d-flex flex-row flex-wrap main-body">
+    <main class="col-12">
+        {% if save_message %}
+            <div class="save-message alert-{{ alert_type }}" style="text-align: center;">
+                {{ save_message }}
+            </div>
+        {% endif %}
+        <span>{{ error }}</span>
+        <form action="{% url 'accounting:employee_group_update' employee_group.id %}" method="post">
+            <input type="hidden" name="id" value="{{employee_group.id}}">
+            {% csrf_token %}
+            <div class="table-responsive">
+                <table class="table table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>社員グループ名</th>
+                            <th>メールアドレス</th>
+                            <th>利用機能</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-group-sm">
+                                    <input class="form-control form-width" type="text" name="name" value="{{ employee_group.name }}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group-sm">
+                                    <input class="form-control form-width" type="email" name="email" value="{{ employee_group.email }}">
+                                </div>
+                            </td>
+                            <td>
+                                <div id="applications">
+                                    <label>
+                                        <input type="hidden" class="hidden_sales" name="sales" value="0">
+                                        <input type="checkbox" name="sales" class="sales" value="1" {% if employee_group.sales == '1' %}checked{% endif %}>売上管理
+                                    </label>
+                                    <label>
+                                        <input type="hidden" class="hidden_clients" name="clients" value="0">
+                                        <input type="checkbox" name="clients" class="clients" value="1" {% if employee_group.clients == '1' %}checked{% endif %}>顧客データ
+                                    </label>
+                                    <label>
+                                        <input type="hidden" class="hidden_partner_companies" name="partner_companies" value="0">
+                                        <input type="checkbox" name="partner_companies" class="partner_companies" value="1" {% if employee_group.partner_companies == '1' %}checked{% endif %}>業者データ
+                                    </label>
+                                    <label>
+                                        <input type="hidden" class="hidden_constructions" name="constructions" value="0">
+                                        <input type="checkbox" name="constructions" class="constructions" value="1" {% if employee_group.constructions == '1' %}checked{% endif %}>工事データ
+                                    </label>
+                                    <label class="merchandise_order_label">
+                                        <input type="hidden" class="hidden_merchandise_order" name="merchandise_order" value="0">
+                                        <input type="checkbox" name="merchandise_order" class="merchandise_order" value="1" {% if employee_group.merchandise_order == '1' %}checked{% endif %}><text class="merchandise_order_text">商品発注書「照合済み」更新</text>
+                                    </label>
+                                    <label>
+                                        <input type="hidden" class="hidden_accounting" name="accounting" value="0">
+                                        <input type="checkbox" name="accounting" class="accounting" value="1" {% if employee_group.accounting == '1' %}checked{% endif %}>アカウント管理
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="wrapper_button">
+                <a href="{% url 'accounting:employee_groups' %}">
+                    <button type="button" class="btn-back btn btn-outline-warning btn-md"><i class="sub-icon fas fa-angle-double-left"></i>戻る
+                    </button>
+                </a>
+                <button type="submit" class="btn-update btn btn-outline-warning btn-md"><i class="sub-icon fas fa-file-export"></i>保存
+                </button>
+                <a href="{% url 'accounting:employee_group_delete' employee_group.id %}">
+                    <button type="button" class="btn-delete btn btn-outline-warning btn-md"><i class="sub-icon fas fa-trash-alt"></i>削除
+                    </button>
+                </a>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}
+{% block script %}<script type="text/javascript" src="{% static 'js/accounting/employee_group_edit.js' %}"></script>{% endblock %}

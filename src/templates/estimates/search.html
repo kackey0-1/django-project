@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/constructions/detail.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/constructions/paper_manage/detail.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estimates/index.css' %}">
+{% endblock %}
+
+{% load parse %}
+{% load calc %}
+{% load humanize %}
+
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <div class="p-6">
+                {% include "documents-tab.html" %}
+                <div class="tab-content">
+                    <div id="tab_estimate" class="tab-pane active">
+                        <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+                        <div class="wrapper_button">   
+                            <button type="submit" class="btn btn-outline-warning btn-md" id="_estimates-delete-btn"><i class="sub-icon fas fa-trash-alt"></i>選択削除</button>
+                            <button type="submit" class="btn btn-outline-warning btn-md" form="excel-export-form"><i class="sub-icon fas fa-download"></i>エクスポート</button>
+                        </div>
+                        <div class="form_area">
+                            <form class="col-lg-12" id="estimates-search"  method="get">
+                                <div class="fg form-inline container col-lg-10">
+                                    <div class="row">
+                                        {{search_form.status}}
+                                        {{search_form.construction_name}}
+                                        {{search_form.sales_user_name}}
+                                        {{search_form.accountant_user_name}}
+                                        {{search_form.submission_date}}
+                                    </div>
+                                </div>
+                                <div class="fg form-inline container col-lg-10">
+                                    <div class="row">
+                                        {{search_form.estimation_code}}
+                                        {{search_form.construction_code}}
+                                        {{search_form.client_name}}
+                                        {{search_form.contractor_name}}
+                                        {{search_form.max_rows}}
+                                        <div class="col-lg-2">
+                                            <button type="submit" class="search_btn btn-outline-dark mb-2 _estimation-search-btn" form="estimates-search" formaction="{% url 'estimates:search' %}"><i class="sub-icon fas fa-search"></i>検索</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive sum">
+                            <table class="table table-striped text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <th>合計金額</th>
+                                        <td>{{ estimations|estimates_sum|intcomma }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>選択</th>
+                                        <th>見積書番号</th>
+                                        <th>ステータス</th>
+                                        <th>見積提出日</th>
+                                        <th>工事件名</th>
+                                        <th>請求先顧客名</th>
+                                        <th>営業担当者</th>
+                                        <th>積算担当</th>
+                                        <th>見積合計金額</th>
+                                        <th>修正日</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <form id="index-form" method="post">
+                                    <input type="hidden" id="_construction_code" name="construction_code" value="">
+                                    {% csrf_token %}
+                                  <tbody>
+                                      {% for estimation in estimations %}
+                                          <tr class="_row{{ estimation.id }}">
+                                              <td><input type="checkbox" name="estimation_id" value="{{ estimation.id }}"></td>
+                                              <td><a href="{% url 'estimates:detail' estimation.id %}">{{ estimation.code }}</a></td>
+                                              <td>
+                                                  {% for estimation_status in estimation_statuses %}
+                                                      {% if estimation_status.0|str == estimation.status|str %}
+                                                        {{ estimation_status.1 }}
+                                                      {% endif %}
+                                                  {% endfor %}
+                                              </td>
+                                              <td>{{ estimation.submission_date|date:"Y/n/j" }}</td>
+                                              <td>{{ estimation.construction_name }}</td>
+                                              <td>{{ estimation.client_name }}</td>
+                                              <td>{{ estimation.sales_user_name }}</td>
+                                              <td>{{ estimation.accountant_user_name }}</td>
+                                              <td>{{ estimation.total_with_tax|intcomma }}</td>
+                                              <td>{{ estimation.updated_at|date:"Y/n/j" }}</td>
+                                              <td><button type="submit" form="index-form" formaction="{% url 'estimates:copy' estimation.id %}" formaction="post" class="btn btn_delete btn-outline-warning btn-md _estimate-copy-btn"><i class="sub-icon fas fa-copy"></i>コピー</button></td>
+                                              <td><button type="submit" form="delete-form" formaction="{% url 'estimates:delete' estimation.id %}" class="btn btn_delete btn-outline-warning btn-md _estimate-delete-btn" value="{{ estimation.id }}"><i class="sub-icon fas fa-trash-alt"></i>削除</button></td>
+                                          </tr>
+                                      {% endfor %}
+                                  </tbody>
+                                </form>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/common/validation.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/estimates/index.js' %}"></script>
+{% endblock %}

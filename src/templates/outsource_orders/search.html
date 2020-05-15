@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}
+
+{% load choice_utilities %}
+{% load parse %}
+{% load humanize %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/outsource_orders/search.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/outsource_orders/constructions-detail.css' %}">
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <div class="mt-1 mb-2">
+                {% include "documents-tab.html" %}
+                <div class="tab-content">
+                    <div id="tab_outsource_orders" class="tab-pane active">
+                        <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+                        <div class="row ml-auto mr-auto">
+                            <div class="col-12">
+                                <div class="wrapper_button">
+                                    <button type="button" class="btn btn-outline-warning btn-md _delete-choice-outsource-order">
+                                        <i class="sub-icon fas fa-trash-alt"></i>
+                                        選択削除
+                                    </button>
+                                    <button type="button"  onclick="submit();" class="btn btn-outline-warning btn-md" form="search-outsource-orders" formaction="{% url 'outsource_orders:export_excel' %}">
+                                        <i class="sub-icon fas fa-download"></i>
+                                        エクスポート
+                                    </button>
+
+                                </div>
+                                {% csrf_token %}
+                                <form id="search-outsource-orders" class="_search-form" action="{% url 'outsource_orders:export_excel' %}" method="get">
+                                    <div class="form-inline container">
+                                        <div class="col-lg-12">
+                                            <select id="status" name="status" class="form-control">
+                                                <option selected value="">ステータス</option>
+                                                <option value="">ステータス</option>
+                                                {% for e in order_status_list %}
+                                                    {% if search_conditions.order_status|str == e.0|str %}
+                                                        <option value="{{ e.0 }}" selected>{{ e.1 }}</option>
+                                                    {% else %}
+                                                        <option value="{{ e.0 }}">{{ e.1 }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+
+                                            <input type="text" id="construction_name" placeholder="工事件名" class="form-control" name="construction_name" value="{{ search_conditions.construction_name }}">
+
+                                            <select id="sales1_user_id" name="sales1_user_id" class="form-control">
+                                                <option selected value="">営業担当</option>
+                                                <option value="">営業担当</option>
+                                                {% for u in users %}
+                                                    {% if search_conditions.sales1_user_id|str == u.id|str %}
+                                                        <option value="{{ u.id }}" selected>{{ u.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ u.id }}">{{ u.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+
+                                            <select id="site1_user_id" name="site1_user_id" class="form-control">
+                                                <option selected value="">現場担当</option>
+                                                <option value="">現場担当</option>
+                                                {% for u in users %}
+                                                    {% if search_conditions.site1_user_id|str == u.id|str %}
+                                                        <option value="{{ u.id }}" selected>{{ u.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ u.id }}">{{ u.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+
+                                            <input type="text" placeholder="発注先" class="form-control" id="partner_company_name" name="partner_company_name" value="{{ search_conditions.partner_company_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline container">
+                                        <div class="col-lg-12">
+                                            <!-- <label for="construction_code" class="sr-only">工事番号</label> -->
+                                            <input type="text" placeholder="工事番号" id="construction_code" class="form-control" name="construction_code" value="{{ search_conditions.construction_code }}">
+                                            <!-- <label for="client_name" class="sr-only">顧客名</label> -->
+                                            <input type="text" placeholder="顧客名" id="client_name" class="form-control" name="client_name" value="{{ search_conditions.client_name }}">
+                                            <!-- <label for="delivery_date" class="sr-only">納品日</label> -->
+                                            <input type="text" onfocus='type="date"'onblur="(this.type='text')" placeholder="工事の竣工日" id="end_date" class="form-control" type="date" name="end_date" value="{{ search_conditions.end_date }}">
+                                            <input type="text" onfocus='type="date"'onblur="(this.type='text')" placeholder="発注書の竣工日" id="order_end_date" class="form-control" type="date" name="order_end_date" value="{{ search_conditions.order_end_date }}">
+                                            <!-- <label for="order_date" class="sr-only">発注日</label> -->
+                                            <input type="text" onfocus='type="date"'onblur="(this.type='text')" placeholder="発注日" id="order_date" class="form-control" type="date" name="order_date" value="{{ search_conditions.order_date }}">
+                                            <!-- <label for="number_of_display" class="sr-only">表示件数</label> -->
+                                            <select name="number_of_display" class="form-control">
+                                                <option selected value="">表示件数</option>
+                                                <option value="">表示件数</option>
+                                                <!--placeholder-->
+                                                <option value="100">100件</option>
+                                                <option value="300">300件</option>
+                                                <option value="500">500件</option>
+                                            </select>
+                                            <button type="submit" class="btn-outline-dark mb-2" formaction="{% url 'outsource_orders:search' %}">
+                                                <i class="sub-icon fas fa-search"></i>
+                                                検索
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-nowrap">
+                                        <thead>
+
+                                                <th>選択</th>
+                                                <th>外注発注番号</th>
+                                                <th>ステータス</th>
+                                                <th>工事件名</th>
+                                                <th>営業担当
+                                                    <br>現場担当</th>
+                                                <th>工事種別
+                                                    <br>支払日</th>
+                                                <th>発注日
+                                                    <br>発注先</th>
+                                                <th>予定原価合計</th>
+                                                <th>工事期間</th>
+                                                <th>コピー</th> <!-- コピーボタン列 -->
+                                                <th>削除</th> <!-- 削除ボタン列 -->
+                                        </thead>
+                                        <tbody>
+                                            {% for outsource_order in outsource_orders %}
+                                                <tr class="_row{{ outsource_order.id }}">
+                                                    <td><input type="checkbox" name="outsource-order-id" value="{{ outsource_order.id }}"></td>
+                                                    <td>
+                                                        <a href="{% url 'outsource_orders:detail' outsource_order.id %}">
+                                                            {{ outsource_order.code }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ outsource_order.order_status | choice_label:"ORDER_STATUS" }}</td>
+                                                    <td>{{ outsource_order.construction_name }}</td>
+                                                    <td>{{ outsource_order.construction.sales1_user.name }}
+                                                        <br>{{ outsource_order.construction.site1_user.name }}</td>
+                                                    <td>{{ outsource_order.construction.project_type | choice_label:"PROJECT_TYPE" }}
+                                                        <br>{{ outsource_order.payment_date }}</td>
+                                                    <td>
+                                                        {{ outsource_order.order_date }}
+                                                        <br>{{ outsource_order.partner_company_name }}
+                                                    </td>
+                                                    <td>{{ outsource_order.expected_cost|intcomma }}</td>
+                                                    <td>{{ outsource_order.construction_start_date }}
+                                                        <br>～{{ outsource_order.construction_end_date }}</td>
+                                                    <td>
+                                                        <a href="{% url 'outsource_orders:copy' outsource_order.id %}">
+                                                            <button type="button" class="btn btn-outline-warning btn-md">
+                                                                <i class="sub-icon fas fa-copy"></i>
+                                                                コピー
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-warning btn-md _delete-outsource-order" value="{{ outsource_order.id }}">
+                                                            <i class="sub-icon fas fa-trash-alt"></i>
+                                                            削除
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/outsource_orders/search.js' %}"></script>
+{% endblock %}

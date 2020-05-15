@@ -1,0 +1,145 @@
+{# 工事請負契約書の場合 #}
+{% load parse %}
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered text-nowrap">
+        <tbody>
+            <tr>
+                <th>工事場所(現場住所)</th>
+                <th></th>
+                <td>
+                    <input class="form-control" name="contract_site_address"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_site_address | default:'' }}"
+                        {% elif mode == 'create' %}
+                            value="{{ construction.site_address }}"
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>工事内容</th>
+                <th></th>
+                <td>
+                    <input class="form-control" type="text" name="contract_description"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_description | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>工期</th>
+                <th>着手(着工日)</th>
+                <td>
+                    <input class="form-control" type="date" name="contract_start_date"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_start_date | date:'Y-m-d' }}"
+                        {% elif mode == 'create' %}
+                            value="{{ construction.start_date | date:'Y-m-d' }}"
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>完成(完工日)</th>
+                <td>
+                    <input class="form-control" type="date" name="contract_end_date"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_end_date | date:'Y-m-d'}}"
+                        {% elif mode == 'create' %}
+                            value="{{ construction.end_date | date:'Y-m-d'}}"
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>請負代金額</th>
+                <th>工事金額(受注金額)税込み</th>
+                <td>
+                    <input class="form-control" type="number" name="contract_total_with_tax"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_total_with_tax | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>消費税</th>
+                <td>
+                    <input class="form-control" type="number" name="contract_tax"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_tax | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>支払方法</th>
+                <th>契約成立時</th>
+                <td>
+                    <input class="form-control" type="text" name="contract_payment_concluded"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_payment_concluded | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>完成引渡時</th>
+                <td>
+                    <input class="form-control" type="text" name="contract_payment_completed"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_payment_completed | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>検査及び引渡時期</th>
+                <th></th>
+                <td>
+                    <input class="form-control" type="text" name="contract_acceptance_day"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_acceptance_day | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                </td>
+            </tr>
+            <tr>
+                <th>書類タイプ</th>
+                <th></th>
+                <td>
+                    <div>
+                    <input class="" type="radio" name="contract_paper_type" value="0"
+                        {% if contract.contract_paper_type|str == '0'%}
+                            checked="checked"
+                        {% endif %}
+                    >監理者
+                    <input class="form-control" type="text" name="contract_paper_type_admin_name"
+                        {% if mode == 'detail' %}
+                            value="{{ contract.contract_paper_type_admin_name | default:'' }}"
+                        {% elif mode == 'create' %}
+                        {% endif %}
+                    >
+                    </div>
+                    <br>
+                    <input class="" type="radio" name="contract_paper_type" value="1"
+                        {% if contract.contract_paper_type|str == '1' or contract.contract_paper_type is None or mode == 'create'  %}
+                            checked="checked"
+                        {% endif %}
+                    >非監理者
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

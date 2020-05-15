@@ -1,0 +1,48 @@
+{% load static %}
+{% load choice_utilities %}
+{% block content %}
+<ul class="nav nav-tabs nav-justified">
+    <li class="nav-item">
+        <a href="#schedule" class="nav-link" data-toggle="tab">スケジュール</a>
+    </li>
+    <li class="nav-item">
+        <a href="#quote" class="nav-link" data-toggle="tab">見積・請求</a>
+    </li>
+    <li class="nav-item">
+        <a href="#merchandise_orders" class="nav-link" data-toggle="tab">仕入れ(商品)</a>
+    </li>
+    <li class="nav-item">
+        <a href="#outsource_orders" class="nav-link" data-toggle="tab">仕入れ(外注)</a>
+    </li>
+    <li class="nav-item">
+        <a href="#budgeting" class="nav-link" data-toggle="tab">予算管理</a>
+    </li>
+    <li class="nav-item">
+        <a href="#history" class="nav-link" data-toggle="tab">履歴・備考</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div id="schedule" class="tab-pane">
+    {% include "constructions/tabs/schedule.html" with construction=construction_form.instance%}
+    </div>
+    <div id="quote" class="tab-pane">
+    {% include "constructions/tabs/quote.html" with construction=construction_form.instance%}
+    </div>
+    <div id="merchandise_orders" class="tab-pane">
+    {% include "constructions/tabs/merchandise_orders.html" with construction=construction_form.instance%}
+    </div>
+    <div id="outsource_orders" class="tab-pane">
+    {% include "constructions/tabs/outsource_orders.html" with construction=construction_form.instance%}
+    </div>
+    <div id="budgeting" class="tab-pane">
+    {% include "constructions/tabs/budgeting.html" with construction=construction_form.instance%}
+    </div>
+    <div id="history" class="tab-pane">
+    {% include "constructions/tabs/history.html" with construction=construction_form.instance%}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/common/validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/constructions/nav_item_tab.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+tr,td {
+    height: 50px !important;
+}
+
+.wrapper_button {
+    width: 550px;
+    margin:0 auto;
+    text-align: center;
+}
+
+.wrapper_button p,.wrapper_button .btn{
+    display: inline-flex;
+}
+
+.wrapper_button p {
+    background-color: #FFFACD;
+    margin-right: 10px;
+}

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estimate_master/detail.css' %}">
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <div class="p-6">
+                <div id="_message-box" class="{{alert_type}}">{{alert_message}}</div>
+                <div ie1d="">
+                    <form action=""　method="post" id="myform">
+                        {% csrf_token %}
+                        {{formset.management_form}}
+                        {{form.id}}
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form_area">
+                                    <table class="table table-striped table-bordered text-nowrap">
+                                        <tbody>
+                                            <tr>
+                                                <th>見積マスタ番号</th>
+                                                <td>
+                                                  {{code}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>分類１</th>
+                                                <td>
+                                                  {{form.taxonomy1}}
+                                                  {{form.taxonomy1.errors}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>分類２</th>
+                                                <td>
+                                                  {{form.taxonomy2}}
+                                                  {{form.taxonomy2.errors}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>内訳</th>
+                                                <td>
+                                                  {{form.name}}
+                                                  {{form.name.errors}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="wrapper_button">
+                                    <a href="{% url 'estimate_master:index' %}">
+                                      <button type="button" class="btn-back btn btn-outline-warning btn-md _go_back_btn"><i class="sub-icon fas fa-angle-double-left"></i>戻る</button>
+                                    </a>
+                                    <button type="submit" class="btn-update btn btn-outline-warning btn-md _invoice-save-button" form="myform" formmethod="post"><i class="sub-icon fas fa-file-export"></i>保存</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered text-nowrap" id="_jsEstimateMasterDetailTemplateTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>名称</th>
+                                            <th>仕様</th>
+                                            <th>定価</th>
+                                            <th>単位</th>
+                                            <th>単価</th>
+                                            <th>単位</th>
+                                            <th>原価</th>
+                                            <th>備考</th>
+                                            <th>メモ</th>
+                                            <th>発注先業者コード</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for detail_form in formset %}
+                                        <tr>
+                                            <td>
+                                              {{forloop.counter}}
+                                              {{detail_form.id}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.name}}
+                                              {{detail_form.name.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.project_type}}
+                                              {{detail_form.project_type.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.nominal_price}}
+                                              {{detail_form.nominal_price.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.nominal_unit}}
+                                              {{detail_form.nominal_unit.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.price}}
+                                              {{detail_form.price.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.unit}}
+                                              {{detail_form.unit.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.cost}}
+                                              {{detail_form.cost.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.description}}
+                                              {{detail_form.description.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.memo}}
+                                              {{detail_form.memo.errors}}
+                                            </td>
+                                            <td>
+                                              {{detail_form.partner_company}}
+                                              {{detail_form.partner_company.errors}}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                    
+                      <div class="wrapper_button">
+                        <button type="button" class="btn btn-outline-warning btn-md _jsEstimateDetailAddTrBtn"><i class="sub-icon fas fa-calendar-plus"></i>追加</button>
+                      </div>
+                  
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/estimate_master/detail.js' %}"></script>
+{% endblock %}

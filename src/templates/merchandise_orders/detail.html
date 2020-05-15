@@ -1,0 +1,450 @@
+{% extends "base.html" %}
+{% load static %}
+{% load parse %}
+{% block title %}IDEAL_ASP{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/merchandise-orders/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/merchandise-orders/constructions-detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/common/modal-style.css' %}">
+{% endblock %}
+
+{% load humanize %}
+
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <input type="hidden" id="_merchandise_order_verification_status" value="{{merchandise_order_verification_status}}">
+            <div class="p-6">
+                {% include "documents-tab.html" %}
+                <div class="tab-content">
+                    <div id="tab_merchandise_orders" class="tab-pane active">
+                        <form id="edit-form" class="" method="post">
+                            {% csrf_token %}
+                            <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+                            <div class="wrapper_button">
+                                <a href="{% url 'merchandise_orders:search' %}">
+                                    <button type="button" class="_go-back-btn btn btn-outline-warning btn-md">
+                                        <i class="sub-icon fas fa-angle-double-left"></i>
+                                        戻る
+                                    </button>
+                                </a>
+                                <button type="submit" class="_save-btn btn btn-outline-warning btn-md" formaction="{% url 'merchandise_orders:update' merchandise_order.id %}">
+                                    <i class="sub-icon fas fa-file-export"></i>
+                                    保存
+                                </button>
+                                <button type="submit" class="_preview-btn btn btn-outline-warning btn-md" formaction="{% url 'merchandise_orders:preview' merchandise_order.id %}">{# ボタンでjsの処理が走った後に遷移 #}
+                                    <i class="sub-icon fas fa-search-plus"></i>
+                                    プレビュー
+                                </button>
+
+                                <a href="{% url 'merchandise_orders:delete' merchandise_order.id %}">{# ボタンでjsの処理が走った後に遷移 #}
+                                    <button type="button" class="_delete-merchandise-order-btn btn btn-outline-warning btn-md">
+                                        <i class="sub-icon fas fa-trash-alt"></i>
+                                        削除
+                                    </button>
+                                </a>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>
+                                                        発注先業者名<br>
+                                                        <button class="_search-partner-company-btn" type="button" name="button"><i class="fas fa-search"></i>検索</button>
+                                                    </th>
+                                                    <td>
+                                                        <input type="hidden" name="partner_company_id" class="_partner_company_id" value="{{ merchandise_order.partner_company_id }}">
+                                                        <input type="hidden" name="partner_company_name" class="_partner_company_name" value="{{ merchandise_order.partner_company_name }}">
+                                                        <div class="form-inline">
+                                                            <p class="_partner-company-text" >{{ merchandise_order.partner_company_name }}</p>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>工事番号</th>
+                                                    <td>{{ merchandise_order.construction.code }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>工事件名</th>
+                                                    <td><input class="form-control" name="construction_name" value="{{ merchandise_order.construction_name }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>現場住所</th>
+                                                    <td><input class="form-control" name="site_address" value="{{ merchandise_order.site_address }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>納品場所</th>
+                                                    <td class="d-flex flex-column">
+                                                        {% for e in delivery_site_list %}
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="delivery_site" value="{{ e.0 }}"
+                                                                        {% if e.0|str == merchandise_order.delivery_site|str %}
+                                                                            checked
+                                                                        {% endif %}>
+                                                                <label class="form-check-label">{{ e.1 }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>発注日</th>
+                                                    <td><input class="form-control" type="date" name="order_date" value="{{ merchandise_order.order_date|date:'Y-m-d' }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>商品発注番号</th>
+                                                    <td>{{ merchandise_order.code }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>ステータス</th>
+                                                    <td>
+                                                        <select name="order_status" class="form-control">
+                                                            {% for e in order_status_list %}
+                                                                <option value="{{ e.0 }}"
+                                                                        {% if e.0|str == merchandise_order.order_status|str %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ e.1 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>現場担当</th>
+                                                    <td>
+                                                        <select name="charge_user_name" class="form-control">
+                                                            {# 初期表示 #}
+                                                            <option value="{{ merchandise_order.charge_user_name }}" _usertel="{{ merchandise_order.charge_user_tel }}">
+                                                                {{ merchandise_order.charge_user_name }}
+                                                            </option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.name }}" _usertel="{{ user.tel }}">
+                                                                    {{ user.name }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>現場担当電話番号</th>
+                                                    <input type="hidden" name="charge_user_tel" value="{{ merchandise_order.charge_user_tel }}">
+                                                    <td class="_tel-text">{{ merchandise_order.charge_user_tel }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>作成者</th>
+                                                    <th>作成日</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ merchandise_order.created.name }}</td>
+                                                    <td>{{ merchandise_order.created_at }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>修正者</th>
+                                                    <th>修正日</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    {% if merchandise_order.updated_at %}
+                                                        <td>{{ merchandise_order.updated.name }}</td>
+                                                        <td>{{ merchandise_order.updated_at }}</td>
+                                                    {% endif %}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>納品日</th>
+                                                    <td><input class="form-control" type="date" name="delivery_date" value="{{ merchandise_order.delivery_date|date:'Y-m-d' }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>支払日</th>
+                                                    <td><input disabled class="form-control" type="date" value="{{ merchandise_order.payment_date|date:'Y-m-d' }}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4"></div> {# 左にスペースを空けるためのdiv #}
+                                <div class="col-8">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>作成者印</th>
+                                                    <th>検印1</th>
+                                                    <th>検印2</th>
+                                                    <!--- 
+                                                    <th>検印3</th>
+                                                    <th>検印4</th>
+                                                    -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <select name="author_stamp_user" class="form-control">
+                                                            <option value=""></option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.id }}"
+                                                                    {% if user.id|str == merchandise_order.author_stamp_user.id|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ user.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="stamp1_user" class="form-control">
+                                                            <option value=""></option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.id }}"
+                                                                    {% if user.id|str == merchandise_order.stamp1_user.id|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ user.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="stamp2_user" class="form-control">
+                                                            <option value=""></option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.id }}"
+                                                                    {% if user.id|str == merchandise_order.stamp2_user.id|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ user.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <!--
+                                                    <td>
+                                                        <select name="stamp3_user" class="form-control">
+                                                            <option value=""></option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.id }}"
+                                                                    {% if user.id|str == merchandise_order.stamp3_user.id|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ user.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="stamp4_user" class="form-control">
+                                                            <option value=""></option>
+                                                            {% for user in users %}
+                                                                <option value="{{ user.id }}"
+                                                                    {% if user.id|str == merchandise_order.stamp4_user.id|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ user.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                    -->
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>小計</th>
+                                                    <th>消費税</th>
+                                                    <th>合計金額</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <!-- <td class="_total">{{ merchandise_order.total }}</td> -->
+                                                    <!-- <td class="_tax">{{ merchandise_order.tax }} 円</td>
+                                                    <td class="_total-with-tax">{{ merchandise_order.total_with_tax }} 円</td> -->
+                                                    <td><i class="_total">{{ merchandise_order.total | intcomma }}</i>円</td>
+                                                    <td><i class="_tax">{{ merchandise_order.tax | intcomma }}</i>円</td>
+                                                    <td><i class="_total-with-tax">{{ merchandise_order.total_with_tax | intcomma }}</i>円</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-nowrap _details-table">
+                                        <thead>
+                                            <tr>
+                                                <th>品名</th>
+                                                <th>仕様</th>
+                                                <th>単価</th>
+                                                <th>数量</th>
+                                                <th>単位</th>
+                                                <th>金額（税抜）</th>
+                                                <th>納期</th>
+                                                <th>削除</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="_add-row-target">
+
+                                            {% for merchandise_detail in merchandise_details %}
+                                            <tr>
+                                                <input type="hidden" name="delete_flgs[]" value="false">
+                                                <input type="hidden" name="merchandise_detail_ids[]" value="{{ merchandise_detail.id }}">
+                                                <td><input type="text" class="form-control" name="merchandise_detail_names[]" value="{{ merchandise_detail.name }}"></td>
+                                                <td><input type="text" class="form-control" name="merchandise_detail_specs[]" value="{{ merchandise_detail.spec }}"></td>
+                                                <td><input type="number" class="_calc-price-trigger form-control" name="merchandise_detail_unit_prices[]" value="{{ merchandise_detail.unit_price }}"></td>
+                                                <td><input type="number" class="_calc-price-trigger form-control" name="merchandise_detail_quantities[]" value="{{ merchandise_detail.quantity }}"></td>
+                                                <td>
+                                                    <select class="form-control" name="merchandise_detail_units[]">
+                                                        <option value=""></option>
+                                                        {% for e in units_list %}
+                                                            <option value="{{ e.0 }}"
+                                                                {% if e.0|str == merchandise_detail.unit|str %}
+                                                                    selected
+                                                                {% endif %}
+                                                            >{{ e.1 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <input class="form-control" name="merchandise_detail_units[]" value="{{ merchandise_detail.unit }}"> -->
+
+                                                </td>
+                                                <td><input type="number" class="_calc-total-trigger form-control" name="merchandise_detail_prices[]" value="{{ merchandise_detail.price }}"></td>
+                                                <td><input type="date" class="form-control" name="merchandise_detail_delivery_dates[]" value="{{ merchandise_detail.delivery_date|date:'Y-m-d' }}"></td>
+                                                <td>
+                                                    <button type="button" class="_delete-detail-btn btn btn-outline-warning btn-md">
+                                                        <i class="sub-icon fas fa-trash-alt"></i>
+                                                        削除
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+
+                                            <tr class="_additional-row" style="display: none;">  {# jqのtoggle()でdisplay: noneが消える #}
+                                                <input type="hidden" name="delete_flgs[]" value="true">
+                                                <input type="hidden" name="merchandise_detail_ids[]" value="">
+                                                <td><input type="text" class="form-control" name="merchandise_detail_names[]" ></td>
+                                                <td><input type="text" class="form-control" name="merchandise_detail_specs[]" value=""></td>
+                                                <td><input type="number" class="_calc-price-trigger form-control" name="merchandise_detail_unit_prices[]" value=""></td>
+                                                <td><input type="number" class="_calc-price-trigger form-control" name="merchandise_detail_quantities[]" value=""></td>
+                                                <td>
+                                                    <select class="form-control" name="merchandise_detail_units[]">
+                                                        <option value=""></option>
+                                                        {% for e in units_list %}
+                                                            <option value="{{ e.0 }}">{{ e.1 }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <input class="form-control" name="merchandise_detail_units[]" value=""> -->
+                                                </td>
+                                                <td><input type="number" class="_calc-total-trigger form-control" name="merchandise_detail_prices[]" value=""></td>
+                                                <td><input type="date" class="form-control" name="merchandise_detail_delivery_dates[]" value=""></td>
+                                                <td>
+                                                    <button type="button" class="_delete-detail-btn btn btn-outline-warning btn-md">
+                                                        <i class="sub-icon fas fa-trash-alt"></i>
+                                                        削除
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="d-flex flex-row justify-content-end w-100">
+                                    <button class="_add-row-btn btn btn-outline-warning btn-md" type="button">
+                                        追加
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p>■備考</p>
+                                <textarea id="_note" name="description" wrap="soft">{{ merchandise_order.description }}</textarea>
+                                <button type="button" class="_change-color-btn btn btn-outline-warning btn-md" value="_note" onclick="changeColor(this)">
+                                    <i class="sub-icon fas fa-pencil-alt text-red"></i>
+                                    色変更
+                                    <input type="hidden" name="colored_flag" value="{{ merchandise_order.colored_flag }}">
+                                </button>
+                            </div>
+                        </form>
+                        {# 税金計算用の値を保持 #}
+                        <input type="hidden" id="tax_rate" value="{{ tax_rate }}">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div id="_search-partner-company-modal" class="modal js-modal">
+    <div class="modal__bg js-modal-close"></div>
+    <div class="modal__content">
+        {% include "components/modal/search-partner-company-modal.html" %}
+    </div><!--modal__inner-->
+</div><!--modal-->
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/common/number-utils.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/common/string-util.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/merchandise-orders/detail.js' %}"></script>
+{% endblock %}

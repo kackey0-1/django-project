@@ -1,0 +1,425 @@
+[
+  {
+    "model": "auth_app.address_states",
+    "pk": 1,
+    "fields": {
+      "address_region_id": 1,
+      "name": "北海道",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 2,
+    "fields": {
+      "address_region_id": 2,
+      "name": "青森県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 3,
+    "fields": {
+      "address_region_id": 2,
+      "name": "岩手県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 4,
+    "fields": {
+      "address_region_id": 2,
+      "name": "宮城県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 5,
+    "fields": {
+      "address_region_id": 2,
+      "name": "秋田県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 6,
+    "fields": {
+      "address_region_id": 2,
+      "name": "山形県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 7,
+    "fields": {
+      "address_region_id": 2,
+      "name": "福島県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 8,
+    "fields": {
+      "address_region_id": 3,
+      "name": "茨城県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 9,
+    "fields": {
+      "address_region_id": 3,
+      "name": "栃木県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 10,
+    "fields": {
+      "address_region_id": 3,
+      "name": "群馬県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 11,
+    "fields": {
+      "address_region_id": 3,
+      "name": "埼玉県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 12,
+    "fields": {
+      "address_region_id": 3,
+      "name": "千葉県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 13,
+    "fields": {
+      "address_region_id": 3,
+      "name": "東京都",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 14,
+    "fields": {
+      "address_region_id": 3,
+      "name": "神奈川県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 15,
+    "fields": {
+      "address_region_id": 4,
+      "name": "新潟県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 16,
+    "fields": {
+      "address_region_id": 4,
+      "name": "富山県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 17,
+    "fields": {
+      "address_region_id": 4,
+      "name": "石川県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 18,
+    "fields": {
+      "address_region_id": 4,
+      "name": "福井県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 19,
+    "fields": {
+      "address_region_id": 4,
+      "name": "山梨県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 20,
+    "fields": {
+      "address_region_id": 4,
+      "name": "長野県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 21,
+    "fields": {
+      "address_region_id": 4,
+      "name": "岐阜県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 22,
+    "fields": {
+      "address_region_id": 4,
+      "name": "静岡県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 23,
+    "fields": {
+      "address_region_id": 4,
+      "name": "愛知県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 24,
+    "fields": {
+      "address_region_id": 5,
+      "name": "三重県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 25,
+    "fields": {
+      "address_region_id": 5,
+      "name": "滋賀県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 26,
+    "fields": {
+      "address_region_id": 5,
+      "name": "京都府",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 27,
+    "fields": {
+      "address_region_id": 5,
+      "name": "大阪府",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 28,
+    "fields": {
+      "address_region_id": 5,
+      "name": "兵庫県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 29,
+    "fields": {
+      "address_region_id": 5,
+      "name": "奈良県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 30,
+    "fields": {
+      "address_region_id": 5,
+      "name": "和歌山県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 31,
+    "fields": {
+      "address_region_id": 6,
+      "name": "鳥取県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 32,
+    "fields": {
+      "address_region_id": 6,
+      "name": "島根県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 33,
+    "fields": {
+      "address_region_id": 6,
+      "name": "岡山県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 34,
+    "fields": {
+      "address_region_id": 6,
+      "name": "広島県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 35,
+    "fields": {
+      "address_region_id": 6,
+      "name": "山口県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 36,
+    "fields": {
+      "address_region_id": 7,
+      "name": "徳島県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 37,
+    "fields": {
+      "address_region_id": 7,
+      "name": "香川県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 38,
+    "fields": {
+      "address_region_id": 7,
+      "name": "愛媛県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 39,
+    "fields": {
+      "address_region_id": 7,
+      "name": "高知県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 40,
+    "fields": {
+      "address_region_id": 8,
+      "name": "福岡県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 41,
+    "fields": {
+      "address_region_id": 8,
+      "name": "佐賀県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 42,
+    "fields": {
+      "address_region_id": 8,
+      "name": "長崎県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 43,
+    "fields": {
+      "address_region_id": 8,
+      "name": "熊本県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 44,
+    "fields": {
+      "address_region_id": 8,
+      "name": "大分県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 45,
+    "fields": {
+      "address_region_id": 8,
+      "name": "宮城県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 46,
+    "fields": {
+      "address_region_id": 8,
+      "name": "鹿児島県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  },
+  {
+    "model": "auth_app.address_states",
+    "pk": 47,
+    "fields": {
+      "address_region_id": 8,
+      "name": "沖縄県",
+      "created_at": "2020-01-01T10:00:00.000000"
+    }
+  }
+]

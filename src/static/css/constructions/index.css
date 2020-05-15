@@ -1,0 +1,228 @@
+/* main CSS */
+.form_area {
+    margin-bottom: 15px;
+}
+
+.SlectBox {
+    height: 30px !important;
+    width: 90px !important;
+    background-color: white;
+    border-color: #ced4da !important;
+    margin-right: 10px;
+}
+
+main span {
+    display    : block;
+    text-align : center;
+    margin     : 20px;
+    color      : red;
+}
+
+.check_box {
+    border: solid 0.5px #ced4da;
+    padding: 3px;
+    border-radius: 0.2em;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.checkbox-inline {
+    margin-bottom: 0;
+}
+
+.check_box label {
+    padding-left: 1px;
+}
+
+.form-control {
+    width: auto !important;
+}
+
+.wrapper_button {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: right;
+}
+
+main .btn {
+    display      : inline-block;
+    margin-right : 5px;
+    margin-bottom: 5px;
+}
+
+.search_btn {
+    border-radius: 0.5em;
+    min-width: 69px;
+    margin-left: 10px;
+}
+
+@media (min-width: 740px) {
+    .form-container {
+        width: 700px;
+    }
+}
+
+@media (max-width: 740px) {
+    .form-inline.container {
+        width: 300px !important;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .col-md-6 {
+        padding-left: 5px;
+    }
+
+    .col-12 {
+        padding: 0;
+    }
+
+    .search_btn {
+        margin-left:10px;
+    }
+}
+
+.form-container {
+    margin-left: 10px;
+    display: block;
+    clear: both;
+}
+
+.form-container input {
+    width:100% !important;
+    margin-bottom: 10px;
+}
+
+.form_area,.form-inline{
+    width: 100%;
+}
+
+.container {
+    display: inline-flex;
+    margin-top: 10px;
+    max-width: 700px;
+}
+
+.form_area {
+    margin-bottom: 10px;
+    height: auto;
+}
+
+.form_area select {
+    width: 100% !important;
+}
+
+#logout_sideBar {
+    display: none;
+}
+
+.container1 {
+    max-width: 700px;
+    margin-left: 20px;
+}
+
+.col-md-6,.col-xl-2 {
+    padding-right: 0 !important;
+}
+
+.container1 select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media(max-width: 1024px) { 
+    #logout {
+        display: none;
+    }
+
+    #logout_sideBar {
+        display: block;
+        color: #FFFFFF;
+    }
+
+    .drawer-nav {
+        display: block!important;
+    }
+
+    .sideBar {
+        display: none;
+    }
+
+    .wrapper_menue_button {
+        display  : block !important;
+    }
+
+    .drawer-nav {
+        background-color : #284251 !important;
+    }
+
+    .sideBar_menue {
+        min-height           : 1219px;
+        background-color : #284251;
+        color            : #FFFFFF;
+        font-size        : 18px;
+        text-align       : left;
+        font-family      : 'M PLUS 1p';
+    }
+
+    .sideBar_menue li {
+        margin-left : 20px;
+        margin-top  : 20px;
+    }
+
+    .sideBar_menue .inner {
+        display: none;
+    }
+
+    .sideBar_menue p {
+        cursor : pointer; 
+        padding: 10px;
+    }
+
+    .sidebar_active {
+        color : #f0ca37;
+    }
+}
+
+@media(max-width: 1200px) {
+    .form-inline.container {
+        width: 400px;
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width: 766px) { 
+    .form_area {
+        text-align: center;
+    }
+}
+
+@media(max-width: 577px) { 
+    .container1 {
+        max-width: 300px;
+        margin:0 auto;
+    }
+
+    .wrapper_button {
+        text-align: left;
+        width: 420px;
+        margin:0 auto;
+        margin-bottom: 10px;
+    }
+}
+
+@media(max-width: 420px) { 
+    main {
+        text-align: center;
+    }
+   
+    .wrapper_button {
+        text-align: left;
+        width: 300px;
+        margin:0 auto;
+        margin-bottom: 10px;
+    }
+}
+.errorlist {
+    color: red;
+}

@@ -1,0 +1,79 @@
+<!-- ハンバーガーボタン -->
+<div class="wrapper_menue_button">
+    <button type="button" class="drawer-toggle drawer-hamburger">
+      <span class="sr-only">toggle navigation</span>
+      <span class="drawer-hamburger-icon"></span>
+    </button>
+</div>
+
+<ul class="sideBar_accordion nav">
+    {% if groupdata.sales_application %}
+        <li>
+            <p class="accordion_title sales-title"><span class="ac_text ">></span><i class="icon fas fa-chart-bar"></i>売上管理</p>
+            <ul class="inner nav sales-inner">
+                <li>
+                    <a href="/sales" class="content sales-content1">><i class="icon fas fa-signal"></i>一覧</a>
+                </li>
+                <li>
+                    <a href="/sales/setting" class="content sales-content2">><i class="icon fas fa-cog"></i>目標値設定</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+    {% if groupdata.clients_application %}
+        <li>
+            <p class="accordion_title clients-title"><span class="ac_text">></span><i class="icon fas fa-portrait"></i>顧客データ</p>
+            <ul class="inner nav clients-inner">
+                <li>
+                    <a href="/clients" class="content clients-content1">><i class="icon fas fa-id-card"></i>一覧</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+    {% if groupdata.partner_companies_application %}
+        <li>
+            <p class="accordion_title partner_companies-title"><span class="ac_text">><i class="icon fas fa-warehouse"></i></span>業者データ</p>
+            <ul class="inner nav partner_companies-inner">
+                <li>
+                    <a href="/partner_companies" class="content partner_companies-content1">><i class="icon fas fa-hammer"></i>業者一覧</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+    {% if groupdata.constructions_application %}
+        <li>
+            <p class="accordion_title constructions-title"><span class="ac_text">><i class="icon fas fa-folder"></i></span>工事台帳</p>
+            <ul class="inner nav constructions-inner">
+                <li>
+                    <a href="/constructions" class="content">><i class="icon fas fa-file-alt"></i>一覧</a>
+                </li>
+                <li>
+                    <a href="/estimates/search" class="content">><i class="icon fas fa-file-alt"></i>書類管理</a>
+                </li>
+                <li>
+                    <a href="/estimate_master/" class="content">><i class="icon fas fa-file-alt"></i>見積書マスタ</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+    {% if groupdata.accounting_application %}
+        <li>
+            <p class="accordion_title accounting-title"><span class="ac_text">><i class="icon fas fa-user-cog"></i></span>アカウント管理</p>
+            <ul class="inner nav accounting-inner">
+                <li>
+                    <a href="/accounting/user" class="content accounting-content1">><i class="icon fas fa-user"></i>社員マスタ</a>
+                </li>
+                <li>
+                    <a href="/accounting/employee_groups" class="content accounting-content2">><i class="icon fas fa-user-friends"></i>社員グループ</a>
+                </li>
+                <li>
+                    <a href="/accounting/password_modify" class="content accounting-content3">><i class="icon fas fa-key"></i>パスワード変更</a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
+        <li>
+            <a id ="logout_sideBar" href="{% url 'auth:logout' %}">ログアウト</a>
+        </li>
+</ul>
+

@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/clients/edit.css' %}">{% endblock %}
+{% load parse %}
+{% block content %}
+<div id="sideBar_wrapper" class="sideBar">
+    {% include "side-bar.html" %}
+</div>
+<div class="d-flex flex-row flex-wrap main-body">
+    <main class="col-12">
+        <div class="save-message alert-{{ alert_type }}" style="text-align: center;">
+            {{ save_message }}
+        </div>
+        <span>{{ error }}</span>
+        <form action="{% url 'clients:update' client.id %}" method="post">
+            <input type="hidden" name="client_id" value="{{client.id}}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="table-responsive col-5">
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>顧客コード</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="number" name="code" value="{{ client.code|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>顧客種別</th>
+                                <td>
+                                    <select name="customer_type" class="form-control">
+                                        <option value=""></option>
+                                        {% for type in client_type %}
+                                            <option value="{{ type.0 }}" {% if type.0 == client.customer_type %}selected{% endif %}>
+                                                {{ type.1 }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>顧客名</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="name" value="{{ client.name|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ふりがな</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="kana" value="{{ client.kana|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>敬称</th>
+                                <td>
+                                    <select name="honorific" class="form-control">
+                                        <option value=""></option>
+                                        <option value="1" {% if client.honorific == '1' %}selected{% endif %}>御中</option>
+                                        <option value="2" {% if client.honorific == '2' %}selected{% endif %}>様</option>
+                                        <option value="3" {% if client.honorific == '3' %}selected{% endif %}>殿</option>
+                                        <option value="4" {% if client.honorific == '4' %}selected{% endif %}>さん</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>都道府県</th>
+                                <td>
+                                    <select name="address_state_id" class="form-control">
+                                        <option value="0"></option>
+                                        {% for state in states %}
+                                            <option value="{{ state.id }}" {% if user.address_state_id == state.id %}selected{% endif %}>
+                                                {{ state.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>市区町村</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="city" value="{{ client.city|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>番地</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="street" value="{{ client.street|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>建物名/部屋番号など</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="building" value="{{ client.building|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>TEL</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="tel" name="tel" value="{{ client.tel }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>FAX</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="tel" name="fax" value="{{ client.fax|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>顧客側担当者名</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="person_in_charge_name" value="{{ client.person_in_charge_name|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>顧客側担当者電話番号</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="tel" name="person_in_charge_tel" value="{{ client.person_in_charge_tel|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive col-5">
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>担当者拠点</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="assigned_base" value="{{ client.assigned_base|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                <!-- <div class="table-responsive col-5"> -->
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>担当者1</th>
+                                <td>
+                                    <select class="form-control" name="person_in_charge_name1">
+                                        <option value=""></option>
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}"{% if user.id == client.person_in_charge_name1 %}selected{% endif %}>{{ user.name }}</option>
+                                        {% endfor %}
+                                        {% if old_user1 %}
+                                            <option value="{{ old_user1.0.id }}"{% if client.person_in_charge_name1 == old_user1.0.id %}selected{% endif %}>{{ old_user1.0.name }}</option>
+                                        {% endif %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>担当者2</th>
+                                <td>
+                                   <select class="form-control" name="person_in_charge_name2">
+                                        <option value=""></option>
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}"{% if client.person_in_charge_name2 == user.id %}selected{% endif %}>{{ user.name }}</option>
+                                        {% endfor %}
+                                        {% if old_user2 %}
+                                            <option value="{{ old_user2.0.id }}"{% if client.person_in_charge_name2 == old_user2.0.id %}selected{% endif %}>{{ old_user2.0.name }}</option>
+                                        {% endif %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>住宅</th>
+                                <td>
+                                    <div class="housing-radio">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="housing" value="1" {{ client.housing_detached_checked }}>
+                                            <label class="form-check-label">戸建</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" name="housing" value="2" {{ client.housing_set_checked }}>
+                                          <label class="form-check-label">集合</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>紹介・媒介</th>
+                                <td>
+                                    <select name="mediation" class="form-control">
+                                        <option value="0"></option>
+                                        <option value="1">HP</option>
+                                        <option value="2">お客様</option>
+                                        <option value="3">協力会社</option>
+                                        <option value="4">社長</option>
+                                        <option value="5">社員</option>
+                                        <option value="6">オフィス仲介</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>業種</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <input class="form-control" type="text" name="industry" value="{{ client.industry|default:'' }}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>締日</th>
+                                <td>
+                                    <select name="closing_date" class="closing_date">
+                                        <option value=""></option>
+                                        {% for date in closing_dates %}
+                                            <option value="{{ date.0 }}" {% if client.closing_date == date.0 %}selected{% endif %}>
+                                                {{ date.1 }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>入金サイト</th>
+                                <td>
+                                    <input class="form-control" type="text" onfocus="type='number'" name="deposit_site" value="{{ client.deposit_site }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ランク</th>
+                                <td>
+                                    <select name="rank" class="form-control">
+                                        <option value="0"></option>
+                                        <option value="1">A</option>
+                                        <option value="2">B</option>
+                                        <option value="3">C</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>作成日時</th>
+                                <td>
+                                    {{ client.created_at }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>作成者</th>
+                                <td>
+                                    {{ client.created_user_name|default:''  }}
+                                     <div class="input-group-sm">
+                                        <input class="form-control" type="hidden"  name="created_user_name" value="{{ client.created_user_name|default:''  }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>最終更新日時</th>
+                                <td>
+                                    {{ client.updated_at|default:'' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>最終更新者</th>
+                                <td>
+                                     {{ client.updated_user_name|default:'' }}
+                                     <div class="input-group-sm">
+                                        <input class="form-control" type="hidden"  name="updated_user_name" value="{{ current_user }}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-striped text-nowrap">
+                        <tbody>
+                            <tr>
+                                <th>備考</th>
+                                <td>
+                                    <div class="input-group-sm">
+                                        <textarea name="remarks" value="{{ client.remarks|default:'' }}"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- </div> -->
+                    <div class="wrapper_button">
+                        <a href="{% url 'clients:index' %}">
+                            <button type="button" class="btn-back btn btn-outline-warning btn-md"><i class="sub-icon fas fa-angle-double-left"></i>戻る</button>
+                        </a>
+                        <button type="submit" class="btn-update btn btn-outline-warning btn-md"><i class="sub-icon fas fa-file-export"></i>保存</button>
+                        <a href="{% url 'clients:delete' client.id %}">
+                            <button type="button" class="btn-delete btn btn_delete btn-outline-warning btn-md"><i class="sub-icon fas fa-trash-alt"></i>消去</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <a href="/constructions/add/{{client.id}}">
+                      <button type="button" class="btn btn-outline-warning btn-md"><i class="sub-icon fas fa-file-export"></i>新規工事作成</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>
+
+<!-- お問い合わせ・工事履歴 -->
+<div class="d-flex flex-row flex-wrap">
+    <main class="col-12 p-2">
+        <form action="{% url 'clients:inquiry_commit' client.id %}" method="post">
+            <input type="hidden" name="client_id" value="{{client.id}}">
+            {% csrf_token %}
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="#inquiry" class="nav-link active" data-toggle="tab">お問い合わせ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#history" class="nav-link" data-toggle="tab">工事履歴</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="inquiry" class="tab-pane active">
+                    <p>■ 新規追加</p>
+                    <div class="row">
+                        <div class="table-responsive col-5">
+                            <table class="table table-striped text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <th>対応日時</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <input type="text" id="datetimepicker" class="form-control" name="correspondence_date" autocomplete="off">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>対応者</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <select class="form-control" name="correspondence_person">
+
+                                                    <!-- <input class="form-control" type="text" name="correspondence_person"> -->
+                                                    <option value=""></option>
+                                                    {% for user in users %}
+                                                        <option value="{{ user.id }}">{{ user.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>宛先</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <input class="form-control" type="email" name="email">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>電話番号</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <input class="form-control" type="number" name="tel2">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive col-5">
+                            <table class="table table-striped text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <th>受付内容</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <textarea name="reception_contents"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>メモ</th>
+                                        <td>
+                                            <div class="input-group-sm">
+                                                <textarea name="note"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn-create btn btn-outline-warning btn-md"><i class="sub-icon fas fa-file-export"></i>追加</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <p>■ 履歴</p>
+                        <table class="table table-bordered table-striped text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>対応日時</th>
+                                    <th>対応者</th>
+                                    <th>宛先</th>
+                                    <th>電話番号</th>
+                                    <th>受付内容</th>
+                                    <th>メモ</th>
+                                    <th>消去</th>
+                                    <th>MAIL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+
+                                {% for inquiry in inquiries %}
+                                    <tr>
+                                        
+
+                                        <td>{{ inquiry.correspondence_date }}</td>
+                                        <td>{{ inquiry.correspondence_person }}</td>
+                                        <td>{{ inquiry.email }}</td>
+                                        <td>{{ inquiry.tel|default:'' }}</td>
+                                        <td>{{ inquiry.reception_contents }}</td>
+                                        <td>{{ inquiry.note }}</td>
+                                        <td>
+                                            <a href="{% url 'clients:inquiry_delete' inquiry.id %}">
+                                                <button type="button" class="btn-inquiry-delete btn btn-outline-warning btn-md"><i class="sub-icon fas fa-trash-alt"></i>消去</button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <!-- <a href="{% url 'clients:sendmail' inquiry.id %}"> -->
+                                                <button type="submit" class="btn-send-email btn btn-outline-warning btn-md" formaction="{% url 'clients:sendmail' inquiry.id %}" {% if inquiry.send_mail_at %}disabled{% endif %}><i class="sub-icon fas fa-envelope"></i>メール送信</button>
+                                            <!-- </a> -->
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="history" class="tab-pane">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>工事番号</th>
+                                    <th>進行状況</th>
+                                    <th>作成日</th>
+                                    <th>工事件名</th>
+                                    <th>金額</th>
+                                    <th>未収金額</th>
+                                    <th>営業担当者</th>
+                                    <th>現場担当者</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-warning btn-md"><i class="sub-icon fas fa-search"></i>詳細表示</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-warning btn-md"><i class="sub-icon fas fa-trash-alt"></i>消去</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/clients/edit.js' %}"></script>{% endblock %}

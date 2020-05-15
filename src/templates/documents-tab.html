@@ -1,0 +1,21 @@
+{% load static %}
+{% block content %}
+<ul class="nav nav-tabs nav-justified">
+    <li class="nav-item">
+        <a id="estimates_tab" href="/estimates/search" class="nav-link">見積書</a>
+    </li>
+    <li class="nav-item">
+        <a id="invoices_tab" href="/invoices/search" class="nav-link">請求書</a>
+    </li>
+    <li class="nav-item">
+        <a id="contracts_tab" href="/contracts/search" class="nav-link">契約書</a>
+    </li>
+    <li class="nav-item">
+        <a id="merchandise_orders_tab" href="/merchandise-orders/search" class="nav-link">商品発注書</a>
+    </li>
+    <li class="nav-item">
+        <a id="outsource_orders_tab" href="/outsource-orders/search" class="nav-link">外注発注書</a>
+    </li>
+</ul>
+{% endblock %}
+{% block script %}<script type="text/javascript" src="{% static 'js/documents-tab/index.js' %}"></script>{% endblock %}

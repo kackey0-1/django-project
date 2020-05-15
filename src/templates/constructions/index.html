@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load choice_utilities %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/constructions/index.css' %}">{% endblock %}
+{% block content %}
+<div id="sideBar_wrapper" class="sideBar">
+    {% include "side-bar.html" %}
+</div>
+<div class="d-flex flex-row flex-wrap main-body">
+    <main class="col-12">
+        <!-- <span>エラー文言スペース</span> -->
+        <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+        <div class="wrapper_button">
+            <button type="button" class="btn btn-outline-warning btn-md" id='construction-selected-delete-btn'><i class="sub-icon fas fa-trash-alt"></i>選択消去</button>
+            <button type="submit" class="btn btn-outline-warning btn-md" form="construnction_search_form" formaction="{% url 'constructions:export_excel' %}"><i class="sub-icon fas fa-download"></i>エクスポート</button>
+        </div>
+        <div class="form_area">
+            <form action="" method="get" id="construnction_search_form">
+            <div class="container1">
+                <div class="row">
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.progress_status}}
+                    </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.sales1_user}}
+                    </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.site1_user}}
+                    </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.design_user}}
+                    </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.accountant_user}}
+                    </div>
+                    <div class="col-xl-2 col-md-2 col-sm-2 col-6">
+                        {{search_form.max_rows}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline container">
+                <div class="form-container">
+                    <div class="row">
+                        <div class="col-md-6 col-xl-3">
+                            <label for="inputPassword2" class="sr-only">工事件名</label>
+                            {{search_form.name}}
+                            {{search_form.name.errors}}
+
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="inputPassword2" class="sr-only">顧客名</label>
+                            {{search_form.client_name}}
+                            {{search_form.client_name.errors}}
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="inputPassword2" class="sr-only">契約予定日</label>
+                            {{search_form.expected_contract_date}}
+                        </div>
+                        <div class="col-md-6 col-xl-3">
+                            <label for="inputPassword2" class="sr-only">契約日</label>
+                            {{search_form.contract_date}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="search_btn btn-outline-dark mb-2"><i class="sub-icon fas fa-search"></i>検索</button>
+            </form>
+        </div>
+        <div class="table-responsive">
+            {% if constructions %}
+            <table class="table table-striped table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th rowspan="2">選択</th>
+                        <th>進行状況</th>
+                        <th>営業担当１</th>
+                        <th>設計担当</th>
+                        <th>工事番号</th>
+                        <th>工事件名</th>
+                        <th rowspan="2">案件種別</th>
+                        <th>契約予定日</th>
+                        <th>着工予定日</th>
+                        <th>竣工予定日</th>
+                        <th>予定原価</th>
+                        <th>請求予定金額</th>
+                        <th>予定粗利率</th>
+                        <th>入金予定日</th>
+                        <th>実行日割粗利</th>
+                    </tr>
+                    <tr>
+                        <th>作成日</th>
+                        <th>現場担当１</th>
+                        <th>積算担当</th>
+                        <th>顧客種別</th>
+                        <th>顧客名</th>
+                        <th>契約日</th>
+                        <th>着工日</th>
+                        <th>竣工日</th>
+                        <th>実行原価</th>
+                        <th>請求金額</th>
+                        <th>実行粗利率</th>
+                        <th>入金完了日</th>
+                        <th>粗利差額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form action="{% url 'constructions:construction_selected_delete' %}" method="POST" id="construction_selected_delete_form">
+                    {% csrf_token %}
+                    {% for construction in constructions %}
+                    <tr class="_row{{ construction.id }}">
+                        <td rowspan="2"><input type="checkbox" name="construction_id" value="{{ construction.id }}"></td>
+                        <td>{{ construction.progress_status | choice_label:'PROGRESS_STATUS' }}</td>
+                        <td>{{ construction.sales1_user.name }}</td>
+                        <td>{{ construction.design_user.name }}</td>
+                        <td><a href="{% url 'constructions:construction_edit' construction.id %}">{{ construction.code }}</a></td>
+                        <td>{{ construction.name }}</td>
+                        <td rowspan="2">{{ construction.project_type | choice_label:'PROJECT_TYPE' }}</td>
+                        <td>{{ construction.expected_contract_date|date:"Y年n月j日" }}</td>
+                        <td>{{ construction.expected_start_date|date:"Y年n月j日" }}</td>
+                        <td>{{ construction.expected_end_date|date:"Y年n月j日" }}</td>
+                        <td>{{ construction.planned_cost|intcomma }} 円</td>
+                        <td>{{ construction.contract_amount|intcomma }} 円</td>
+                        <td>{{ construction.planned_gross_profit|stringformat:"i"|add:"%" }}</td>
+                        <td>{{ construction.expected_payment_date|date:"Y年n月j日" }}</td>
+                        <td>{{ construction.gross_per_day|intcomma }} 円/日</td>
+                    </tr>
+                    <tr>
+                        <td>{{ construction.created_at|date:"Y年n月j日" }}</td>
+                        <td>{{ construction.site1_user.name }}</td>
+                        <td>{{ construction.accountant_user.name }}</td>
+                        <td>{{ construction.client.customer_type }}</td>
+                        <td>{{ construction.client_name }}</td>
+                        <td>{{ construction.contract_date }}</td>
+                        <td>{{ construction.start_date }}</td>
+                        <td>{{ construction.end_date }}</td>
+                        <td>{{ construction.cost|intcomma }} 円</td>
+                        <td>{{ construction.billing_amount|intcomma }} 円</td>
+                        <td>{{ construction.gross_profit|stringformat:"i"|add:"%" }}</td>
+                        <td>{{ construction.payment_date }}</td>
+                        <td>{{ construction.gross_balance|intcomma }} 円</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+              <p class="text-center font-weight-bold"> データが存在しません。</p>
+            {% endif %}
+        </div>
+    </main>
+</div>
+{% endblock %}
+{% block script %}<script type="text/javascript" src="{% static 'js/constructions/index.js' %}"></script>{% endblock %}

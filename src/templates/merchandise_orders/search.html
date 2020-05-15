@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}IDEAL_ASP{% endblock %}
+{% block style %}
+
+{% load choice_utilities %}
+{% load parse %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/merchandise-orders/search.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/merchandise-orders/constructions-detail.css' %}">
+{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <div class="mt-1 mb-2">
+                {% include "documents-tab.html" %}
+                <div class="tab-content">
+                    <div id="tab_merchandise_orders" class="tab-pane active">
+                        <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+                        <div class="row ml-auto mr-auto">
+                            <div class="col-12">
+                                <div class="wrapper_button">
+                                    <button type="button" class="btn btn-outline-warning btn-md _delete-choice-merchandise-order"><i class="sub-icon fas fa-trash-alt"></i>選択削除</button>
+                                    <button type="submit" class="btn btn-outline-warning btn-md" form="excel-export-form"><i class="sub-icon fas fa-download"></i>エクスポート</button>
+                                    <form id="excel-export-form" action="{% url 'merchandise_orders:export_excel' %}" method="GET">
+                                        <input type="hidden" name="status" value="{{ search_conditions.order_status }}">
+                                        <input type="hidden" name="construction_name" value="{{ search_conditions.construction_name }}">
+                                        <input type="hidden" name="charge_user_name" value="{{ search_conditions.charge_user_name }}">
+                                        <input type="hidden" name="product_name" value="{{ search_conditions.product_name }}">
+                                        <input type="hidden" name="product_spec" value="{{ search_conditions.product_spec }}">
+                                        <input type="hidden" name="delivery_date" value="{{ search_conditions.delivery_date }}">
+                                        <input type="hidden" name="construction_code" value="{{ search_conditions.construction_code }}">
+                                        <input type="hidden" name="client_name" value="{{ search_conditions.client_name }}">
+                                        <input type="hidden" name="order_date" value="{{ search_conditions.order_date }}">
+                                        <input type="hidden" name="number_of_display" value="{{ search_conditions.number_of_display }}">
+                                    </form>
+                                </div>
+                                {% csrf_token %}
+                                <form id="search-merchandise-orders" class="_search-form" action="{% url 'merchandise_orders:search' %}" method="get">
+                                    <div class="form-inline container">
+                                        <div class="col-lg-12">
+                                            <select id="status" name="status" class="form-control">
+                                                <option selected="selected" value="">ステータス</option>
+                                                <!--placeholder-->
+                                                <option value="">ステータス</option>
+                                                {% for e in order_status_list %}
+                                                    <option value="{{ e.0 }}"
+                                                            {% if e.0|str == search_conditions.order_status|str %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ e.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input class="form-control" id="construction_name" name="construction_name" value="{{ search_conditions.construction_name }}" placeholder="工事件名">
+                                            <!-- <input class="form-control" name="charge_user_name" value="{{ search_conditions.charge_user_name }}" placeholder="現場担当""> -->
+                                            <select id="charge_user_name" name="charge_user_name" class="form-control">
+                                                <option selected="selected" value="">現場担当</option>
+                                                <!--placeholder-->
+                                                <option value="">現場担当</option>
+                                                {% for user in users %}
+                                                    <option value="{{ user.name }}"
+                                                            {% if user.name|str == search_conditions.charge_user_name|str %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ user.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <!-- <label for="product_name" class="sr-only">品名</label> -->
+                                            <input class="form-control" id="product_name" name="product_name" value="{{ search_conditions.product_name }}" placeholder="品名">
+                                            <!-- <label for="product_spec" class="sr-only">仕様</label> -->
+                                            <input class="form-control" id="product_spec" name="product_spec" value="{{ search_conditions.product_spec }}" placeholder="仕様">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline container">
+                                        <div class="col-lg-12">
+                                            <!-- <label for="construction_code" class="sr-only">工事番号</label> -->
+                                            <input id="construction_code" class="form-control _construction-code-text" name="construction_code" placeholder="工事番号" value="{{ search_conditions.construction_code }}">
+                                            <!-- <label for="client_name" class="sr-only">顧客名</label> -->
+                                            <input id="client_name" class="form-control" name="client_name" value="{{ search_conditions.client_name }}" placeholder="顧客名">
+                                            <!-- <label for="delivery_date" class="sr-only">納品日</label> -->
+                                            <input id="delivery_date" class="form-control" type="text" onfocus="type='date'"onblur="(this.type='text')" name="delivery_date" value="{{ search_conditions.delivery_date }}" placeholder="納品日">
+                                            <!-- <label for="order_date" class="sr-only">発注日</label> -->
+                                            <input id="order_date" class="form-control" type="text" onfocus="type='date'"onblur="(this.type='text')" name="order_date" value="{{ search_conditions.order_date }}" placeholder="発注日">
+                                            <!-- <label for="number_of_display" class="sr-only">表示件数</label> -->
+                                            <select name="number_of_display" class="form-control">
+                                                <option selected="selected" value="">表示件数</option>
+                                                <option value="">表示件数</option>
+                                                <!--placeholder-->
+                                                <option value="100" {% if search_conditions.number_of_display == '100' %}selected{% endif %}>100件</option>
+                                                <option value="300" {% if search_conditions.number_of_display == '300' %}selected{% endif %}>300件</option>
+                                                <option value="500" {% if search_conditions.number_of_display == '500' %}selected{% endif %}>500件</option>
+                                            </select>
+                                            <button type="submit" class="btn-outline-dark mb-2" formaction="{% url 'merchandise_orders:search' %}">
+                                                <i class="sub-icon fas fa-search"></i>
+                                                検索
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-nowrap">
+                                        <thead>
+
+                                                <th>選択</th>
+                                                <th>商品発注番号</th>
+                                                <th>ステータス</th>
+                                                <th>工事件名</th>
+                                                <th>現場担当</th>
+                                                <th>工事種別</th>
+                                                <th>業種</th>
+                                                <th>発注日
+                                                    <br>発注先</th>
+                                                <th>品名
+                                                    <br>仕様</th>
+                                                <th>金額（税抜）</th>
+                                                <th>納品先</th>
+                                                <th></th> <!-- コピーボタン列 -->
+                                                <th></th> <!-- 削除ボタン列 -->
+
+                                        </thead>
+                                        <tbody>
+                                            {% for merchandise_order in merchandise_orders %}
+                                                <tr class="_row{{ merchandise_order.id }}">
+                                                    <td><input type="checkbox" name="merchandise-order-id" value="{{ merchandise_order.id }}"></td>
+                                                    <td>
+                                                        <a href="{% url 'merchandise_orders:detail' merchandise_order.id %}">
+                                                            {{ merchandise_order.code }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ merchandise_order.order_status | choice_label:"ORDER_STATUS" }}</td>
+                                                    <td>{{ merchandise_order.construction_name }}</td>
+                                                    <td>{{ merchandise_order.charge_user_name }}</td>
+                                                    <td>{{ merchandise_order.construction.project_type | choice_label:"PROJECT_TYPE" }}</td>
+                                                    <td>{{ merchandise_order.partner_company.large_industry | int | choice_label:"INDUSTRY_MAJOR" }}
+                                                        <br>{{ merchandise_order.partner_company.small_industry | int | choice_label:"INDUSTRY_MINOR" }}</td>
+                                                    <td>
+                                                        {{ merchandise_order.order_date }}
+                                                        <br>{{ merchandise_order.partner_company_name }}
+                                                    </td>
+
+                                                    <td>
+                                                        {% for detail in merchandise_order.merchandisedetails_set.all %}
+                                                            {{ detail.name }},
+                                                        {% endfor %}
+                                                        <br>
+                                                        {% for detail in merchandise_order.merchandisedetails_set.all %}
+                                                            {{ detail.spec }},
+                                                        {% endfor %}
+                                                    </td>
+
+                                                    <td>{{ merchandise_order.total }} 円</td>
+                                                    <td>{{ merchandise_order.delivery_site | choice_label:"DELIVERY_SITE" }}</td>
+                                                    <td>
+                                                        <a href="{% url 'merchandise_orders:copy' merchandise_order.id %}">
+                                                            <button type="button" class="btn btn-outline-warning btn-md">
+                                                                <i class="sub-icon fas fa-copy"></i>
+                                                                コピー
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-warning btn-md _delete-merchandise-order" value="{{ merchandise_order.id }}">
+                                                            <i class="sub-icon fas fa-trash-alt"></i>
+                                                            削除
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'js/common/validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/merchandise-orders/search.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,218 @@
+/* main CSS */
+/* ポップアップ */
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: .6s;
+}
+
+.popup.is-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    max-width: 600px;
+    padding: 50px;
+    background-color: #fff;
+    z-index: 2;
+    height: 80%;
+}
+
+#popup-btn {
+    text-align: center;
+}
+
+#popup-btn button {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.popup-table span {
+    padding-left: 5px;
+}
+
+.popup-table {
+    height: 100%;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.close-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
+.black-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.8);
+    z-index: 1;
+}
+
+#js-show-popup {
+    border: 1px solid;
+    padding: 5px;
+    background: white;
+    margin-left: 15px;
+    border-radius: 5px;
+}
+
+#js-show-popup:hover {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.form_area {
+    margin-bottom: 15px;
+    height: 100px;
+    padding-left: 10px;
+}
+
+.SlectBox {
+    height: 30px !important;
+    width: 90px !important;
+    background-color: white;
+    border-color: #ced4da !important;
+    margin-right: 10px;
+}
+
+.type_of_industry {
+    margin-bottom: 10px;
+}
+
+#input_company.form-control {
+    margin-top: 10px !important;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form_area input {
+    margin-right: 10px;
+    width: 
+}
+
+.check_box {
+    border: solid 0.5px #ced4da;
+    padding: 3px;
+    border-radius: 0.2em;
+    margin-left: 10px;
+}
+
+.checkbox-inline {
+    margin-bottom: 0;
+}
+
+.check_box label {
+    padding-left: 1px;
+}
+
+.fg {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.form-control {
+    width: 200px !important;
+}
+
+
+.form_area {
+    float : left;
+}
+
+.wrapper_button {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+main .btn {
+    display      : inline-block;
+    margin-right : 5px;
+    margin-bottom: 5px;
+}
+
+.table th {
+    background-color: #C0C0C0 !important;
+    width: 50px;
+    color: #284251;
+}
+
+/* レスポンシブ */
+@media(max-width: 570px) { 
+    .drawer-nav {
+        display: block!important;
+    }
+
+    .sideBar {
+        display: none;
+    }
+
+    .wrapper_menue_button {
+        display  : block !important;
+    }
+
+    .drawer-nav {
+        background-color : #284251 !important;
+    }
+
+    .sideBar_menue {
+        height           : 1219px;
+        background-color : #284251;
+        color            : #FFFFFF;
+        font-size        : 18px;
+        text-align       : left;
+        font-family      : 'M PLUS 1p';
+    }
+
+    .sideBar_menue li {
+        margin-left : 20px;
+        margin-top  : 20px;
+    }
+
+    .sideBar_menue .inner {
+        display: none;
+    }
+
+    .sideBar_menue p {
+        cursor : pointer; 
+        padding: 10px;
+    }
+
+    .sidebar_active {
+        color : #f0ca37;
+    }
+
+    @media(max-width: 678px) {
+
+    }
+}

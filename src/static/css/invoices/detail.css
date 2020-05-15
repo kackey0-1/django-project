@@ -1,0 +1,53 @@
+.p-6 {
+    margin-top: 10px !important;
+    height: 100%;
+}
+
+.wrapper_button {
+    float: right;
+    display: inline-flex;
+}
+
+/* 見積書 CSS */
+#e2 {
+    display: none;
+}
+
+#tab_estimate.form_area {
+    border:1px #BDB76B solid;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+.fa-pencil-alt {
+    color: red;
+}
+
+form {
+    /* float: right; */
+    margin-top:10px;
+}
+
+.wrapper_button3 {
+    float: left;
+}
+
+.col-7 {
+    height: 100%;
+}
+
+#_message-box {
+    padding: 15px;
+    margin: 15px;
+    text-align: center;
+}
+
+._hidden-row {
+    display: none;
+}

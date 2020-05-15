@@ -1,0 +1,113 @@
+/* main CSS */
+.form-group {
+    display: inline-block;
+}
+
+main span {
+    display    : block;
+    text-align : center;
+    margin     : 20px;
+    color      : red;
+}
+
+.edit {
+    color: black;
+}
+
+.edit:hover {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    cursor: pointer;
+}
+
+.save-message {
+    padding: 15px;
+    margin: 15px;
+}
+
+.btn-search {
+    border-radius: 0.5em;
+}
+
+.btn-search:hover {
+    cursor: pointer;
+}
+
+/* レスポンシブPC画面 */
+@media(min-width : 910px) {
+    .form_area {
+        float      : left;
+        margin-left: 10px;
+    }
+
+    main .btn {
+        margin-bottom: 10px;
+    }
+
+    .wrapper_button {
+        float : right;
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width : 909px) {
+    .form_area {
+        margin:0;
+    }
+
+    .wrapper_button {
+        margin-bottom: 20px;
+    }
+
+    main {
+        text-align: center;
+    }
+}
+@media(max-width: 640px) {
+    .drawer-nav {
+        display: block!important;
+    }
+
+    .sideBar {
+        display: none;
+    }
+
+    .wrapper_menue_button {
+        display  : block !important;
+    }
+
+    .drawer-nav {
+        background-color : #284251 !important;
+    }
+
+    .sideBar_menue {
+        height           : 1219px;
+        background-color : #284251;
+        color            : #FFFFFF;
+        font-size        : 18px;
+        text-align       : left;
+        font-family      : 'M PLUS 1p';
+    }
+
+    .sideBar_menue li {
+        margin-left : 20px;
+        margin-top  : 20px;
+    }
+
+    .sideBar_menue .inner {
+        display: none;
+    }
+
+    .sideBar_menue p {
+        cursor : pointer; 
+        padding: 10px;
+    }
+
+    .sidebar_active {
+        color : #f0ca37;
+    }
+}

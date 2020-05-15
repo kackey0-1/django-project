@@ -1,0 +1,9 @@
+.text-red {
+    color: red;
+}
+
+#_message-box {
+    padding: 15px;
+    margin: 15px;
+    text-align: center;
+}

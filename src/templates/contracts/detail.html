@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load parse %}
+
+{% block title %}IDEAL_ASP{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/contracts/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/contracts/constructions-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div id="sideBar_wrapper" class="sideBar">
+        {% include "side-bar.html" %}
+    </div>
+    <div class="row">
+        <main class="col-md-12">
+            <div class="p-6">
+                {% include "documents-tab.html" %}
+                <div class="tab-content">
+                    <div id="tab_merchandise_orders" class="tab-pane active">
+                        <form id="edit-form" class="" method="post">
+                            {% csrf_token %}
+                            <div id="_message-box" class="{{ alert_type }}">{{ alert_message }}</div>
+                            <div class="wrapper_button">
+                                <a href="{% url 'contracts:search' %}">
+                                <button type="button" class="btn btn-outline-warning btn-md">
+                                    <i class="sub-icon fas fa-angle-double-left"></i>
+                                    戻る
+                                </button>
+                                </a>
+                                <button type="submit" class="_save-btn btn btn-outline-warning btn-md" formaction="{% url 'contracts:update' contract.id %}">
+                                    <i class="sub-icon fas fa-file-export"></i>
+                                    保存
+                                </button>
+                                <button type="submit" class="_preview-btn btn btn-outline-warning btn-md" formaction="{% url 'contracts:preview' contract.id %}" formmethod="post">
+                                    <i class="sub-icon fas fa-search-plus"></i>
+                                    プレビュー
+                                </button>
+
+                                <a href="{% url 'contracts:delete' contract.id %}">{# ボタンでjsの処理が走った後に遷移 #}
+                                    <button type="button" class="_delete-contract-btn btn btn-outline-warning btn-md">
+                                        <i class="sub-icon fas fa-trash-alt"></i>
+                                        削除
+                                    </button>
+                                </a>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>工事番号</th>
+                                                    <td>{{ contract.construction.code }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>契約書番号</th>
+                                                    <td>{{ contract.code }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>契約書種別</th>
+                                                    <td>
+                                                        <select class="_type-select form-control" name="contract_type">
+                                                            {% for e in contract_type_list %}
+                                                                <option value="{{ e.0 }}"
+                                                                    {% if e.0|str == contract.contract_type|str %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >{{ e.1 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <tbody>
+                                                <tr>
+                                                    <th>契約日</th>
+                                                    <td><input class="form-control" type="date" name="contract_date" value="{{ contract.contract_date|date:'Y-m-d' }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>工事件名</th>
+                                                    <td><input class="form-control" type="text" name="construction_name" value="{{ contract.construction_name }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>発注者氏名
+                                                        <br>(契約者氏名)</th>
+                                                    <td><input class="form-control" type="text" name="contractor_name" value="{{ contract.contractor_name}}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>発注者住所
+                                                        <br>(契約者住所)</th>
+                                                    <td><input class="form-control" type="text" name="contractor_address" value="{{ contract.contractor_address }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>発行日</th>
+                                                    <td><input class="form-control" type="date" name="published_date" value="{{ contract.published_date|date:'Y-m-d' }}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>送付区分</th>
+                                                    <td>
+                                                        {% for e in delivery_method_list %}
+                                                            <input type="radio" name="delivery_method" value="{{ e.0 }}"
+                                                                {% if e.0|str == contract.delivery_method|str %}
+                                                                    checked
+                                                                {% endif %}
+                                                            >{{ e.1 }}
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6"></div> {# 余白用 #}
+                                <div class="col-6">
+                                    <div _templates="none-edit" class="row">
+                                        {# 何も表示しない #}
+                                    </div>
+                                    <div _templates="contract-edit" class="row" style="display:none"> {# 工事請負契約書の場合 #}
+                                        {% include "contracts/detail_edit/contract.html" %}
+                                    </div>
+                                    <div _templates="basic-edit" class="row" style="display:none"> {# 工事請負基本契約書の場合 #}
+                                        {% include "contracts/detail_edit/basic.html" %}
+                                    </div>
+                                    <div _templates="order-edit" class="row" style="display:none"> {# 工事注文書（基本契約用/約款付）の場合 #}
+                                        {% include "contracts/detail_edit/order.html" %}
+                                    </div>
+                                    <div _templates="confirm-edit" class="row" style="display:none"> {# 工事請負書（基本契約用/約款付）の場合 #}
+                                        {% include "contracts/detail_edit/confirm.html" %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/common/validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/contracts/detail-edit-validations.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/contracts/detail.js' %}"></script>
+{% endblock %}
+
+
+
+
