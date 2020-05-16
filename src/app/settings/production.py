@@ -28,9 +28,9 @@ DEBUG = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ideal_asp',
-        'USER': 'user',
-        'PASSWORD': 'password',
+        'NAME': 'django_app',
+        'USER': 'django_app',
+        'PASSWORD': 'django_app',
         'HOST': 'db',
         'PORT': '3306',
     }

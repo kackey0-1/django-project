@@ -1,6 +1,7 @@
 Django==2.2.*
 django-cleanup==4.0.*
 Pillow==7.1.*
+stripe==2.45.*
 uwsgi==2.0.17
 boto3==1.13.8.*
 django-debug-toolbar==2.2.*

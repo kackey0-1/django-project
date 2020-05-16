@@ -20,9 +20,9 @@ services:
         - "3306:3306"
       environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: ideal_asp
-        MYSQL_USER: user
-        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: django_app
+        MYSQL_USER: django_app
+        MYSQL_PASSWORD: django_app
         TZ: 'Asia/Tokyo'
       volumes:
         - ./mysql:/var/lib/mysql
