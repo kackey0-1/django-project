@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # My applications
     'accounts.apps.AccountsConfig',
     'shop.apps.ShopConfig',
+    'projects.apps.ProjectsConfig',
 ]
 
 MIDDLEWARE = [
