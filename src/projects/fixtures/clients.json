@@ -1,0 +1,42 @@
+[
+    {
+      "model": "projects.Client",
+      "pk": 1,
+      "fields": {
+        "name": "顧客01",
+        "url": "https://sample.com",
+        "email": "hogehoge1@sample.com",
+        "tel": "0000000001",
+        "fax": "0000000001",
+        "company_email": "hogehoge1@sample.com",
+        "address_state_id": "1",
+        "city": "東京",
+        "street": "新宿ミロード",
+        "building": "新宿バスタ",
+        "created_id": 1,
+        "created_at": "2020-05-16T16:16:41+09:00",
+        "updated_id": 1,
+        "updated_at": "2020-05-16T16:16:41+09:00"
+      }
+    },
+    {
+        "model": "projects.Client",
+        "pk": 2,
+        "fields": {
+          "name": "顧客02",
+          "url": "https://sample.com",
+          "email": "hogehoge2@sample.com",
+          "tel": "0000000002",
+          "fax": "0000000002",
+          "company_email": "hogehoge2@sample.com",
+          "address_state_id": "2",
+          "city": "東京2",
+          "street": "新宿ミロード2",
+          "building": "新宿バスタ2",
+          "created_id": 1,
+          "created_at": "2020-05-16T16:16:41+09:00",
+          "updated_id": 1,
+          "updated_at": "2020-05-16T16:16:41+09:00"
+        }
+      }
+  ]

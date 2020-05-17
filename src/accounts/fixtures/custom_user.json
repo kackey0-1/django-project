@@ -1,0 +1,41 @@
+[
+    {
+      "model": "accounts.CustomUser",
+      "pk": 1,
+      "fields": {
+        "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
+        "is_superuser": 1,
+        "username": "hogehoge1",
+        "email": "hogehoge1@sample.com",
+        "is_staff": 1,
+        "is_active": 1,
+        "date_joined": "2020-05-16 15:28:41.078265"
+      }
+    },
+    {
+        "model": "accounts.CustomUser",
+        "pk": 2,
+        "fields": {
+          "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
+          "is_superuser": 1,
+          "username": "hogehoge2",
+          "email": "hogehoge2@sample.com",
+          "is_staff": 1,
+          "is_active": 1,
+          "date_joined": "2020-05-16 15:28:41.078265"
+        }
+    },
+    {
+        "model": "accounts.CustomUser",
+        "pk": 3,
+        "fields": {
+          "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
+          "is_superuser": 1,
+          "username": "hogehoge3",
+          "email": "hogehoge3@sample.com",
+          "is_staff": 1,
+          "is_active": 1,
+          "date_joined": "2020-05-16 15:28:41.078265"
+        }
+    }
+  ]

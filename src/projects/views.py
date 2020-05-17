@@ -1,6 +1,5 @@
 import logging
 
-import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,48 +9,64 @@ from django.views.generic import View
 
 logger = logging.getLogger(__name__)
 
-from .models import Project
-from .forms import RegisterForm
+from projects.models import Project
+from projects.forms import EntryForm
+from projects.modules import ProjectModules as p
 
 # Create your views here.
 class IndexView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        queryset = Project.objects.all()
         keyword = request.GET.get('keyword')
-        if keyword:
-            queryset = queryset.filter(
-                Q(test_name__icontains=keyword) | Q(test_description__icontains=keyword)
-            )
+        queryset = p.search(keyword)
         context = {
             'keyword': keyword,
-            'test_list': queryset,
+            'project_list': queryset,
         }
-        return render(request, 'projects/test_list.html', context)
+        return render(request, 'projects/project_list.html', context)
 index = IndexView.as_view()
 
-class RegisterView(View):
+class PutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
-            'form': RegisterForm(),
+            'form': EntryForm(),
         }
-        return render(request, 'projects/test_register.html', context)
+        return render(request, 'projects/project_entry.html', context)
 
     def post(self, request, *args, **kwargs):
         logger.info("You're in post!!!")
-
+        user_id = request.user.id
+        client_id = request.user.client_id
         # リクエストからフォームを作成
-        form = RegisterForm(request.POST)
+        if request.POST['id']:
+            # 更新処理の場合
+            project = p.getProject(request.POST['id'])
+            form = EntryForm(request.POST, instance=project)
+        else:
+            # 新規処理の場合
+            form = EntryForm(request.POST)
         # バリデーション
         if not form.is_valid():
-            # バリデーションNGの場合はアカウント登録画面のテンプレートを再表示
-            return render(request, 'projects/test_register.html', {'form': form})
-
+            # バリデーションNGの場合:登録画面のテンプレートを再表示
+            return render(request, 'projects/test_entry.html', {'form': form})
         # 保存する前に一旦取り出す
         project = form.save(commit=False)
-        # # パスワードをハッシュ化してセット
-        # user.set_password(form.cleaned_data['password'])
-        # # ユーザーオブジェクトを保存
-        project.save()
-
+        # proejct 保存
+        project = p.save_project(project, user_id, client_id)
         return redirect("projects:index")
-register = RegisterView.as_view()
+put = PutView.as_view()
+
+class DetailView(LoginRequiredMixin, View):
+    def get(self, request, project_id, *args, **kwargs):
+        project = p.getProject(project_id)
+        form = EntryForm(instance=project)
+        logger.info(form)
+        context = {
+            'form': form
+        }
+        return render(request, 'projects/project_detail.html', context)
+
+    def post(self, request, *args, **kwargs):
+        project = p.getProject(request.POST['id'])
+        p.delete_project(project, request.user.id)
+        return redirect("projects:index")
+detail = DetailView.as_view()

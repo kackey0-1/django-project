@@ -8,8 +8,12 @@ class CustomUser(AbstractUser):
 
     class Meta(object):
         db_table = 'custom_user'
-
+    
+    # 標準フィールド
+    # https://docs.djangoproject.com/en/3.0/ref/contrib/auth/#fields
+    # カスタムフィールド
     login_count = models.IntegerField(verbose_name='ログイン回数', default=0)
+    client = models.ForeignKey('projects.Client', models.DO_NOTHING)
 
     def post_login(self):
         """ログイン後処理"""
