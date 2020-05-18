@@ -48,10 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    # XXX: chat function
+    'channels',
+
     # My applications
     'accounts.apps.AccountsConfig',
     'shop.apps.ShopConfig',
     'projects.apps.ProjectsConfig',
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +96,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
+# XXX: chat function
+ASGI_APPLICATION = 'app.routing.application'
 
 CACHES = {
     'default': {
@@ -181,6 +187,10 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': False,
+        },
+        'daphne': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
         },
     },
     'root': {

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import pymysql
+# import pymysql
 import sys
 from app.settings.common import *
 
@@ -24,7 +24,7 @@ DEBUG = False
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
+# pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -60,12 +60,12 @@ LOGGING = {
 # メール設定
 # Gmail 以外の場合 EMAIL_HOST,EMAIL_PORT の変更が必要
 # EMAIL_HOST_USER に送信元のメールアドレスを入力する
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ideal.asp.contact@gmail.com'
-EMAIL_HOST_PASSWORD = 'contactideal123'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'ideal.asp.contact@gmail.com'
+# EMAIL_HOST_PASSWORD = 'contactideal123'
 
-EMAIL_USE_TLS = True
+# EMAIL_USE_TLS = True
 
 SHELL_PLUS = "ipython"
 IPYTHON_ARGUMENTS = [

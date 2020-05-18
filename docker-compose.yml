@@ -9,8 +9,14 @@ services:
         - ./nginx/conf:/etc/nginx/conf.d
         - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
         - ./src/static:/static
+        - ./logs/nginx:/var/log/nginx
       depends_on:
         - python
+  
+  redis:
+    image: redis:alpine
+    expose:
+      - "6379"
 
   db:
       image: mysql:5.7
@@ -30,18 +36,20 @@ services:
 
   python:
       build: ./python
-      command: uwsgi --socket :8001 --module app.wsgi --py-autoreload 1 --logto /tmp/mylog.log
+      command: sh /tmp/django_exec.sh
       volumes:
         - ./src:/code
         - ./src/static:/static
-        - ./logs:/logs
+        - ./logs/django:/logs
+        - ./deploy:/tmp
       environment:
         AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
         AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
         AWS_DEFAULT_REGION: ap-northeast-1
         AWS_DEFAULT_OUTPUT: json 
-
       expose:
         - "8001"
+        - "3001"
       depends_on:
         - db
+        - redis

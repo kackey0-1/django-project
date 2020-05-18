@@ -17,7 +17,7 @@ class RegisterView(View):
     def get(self, request, *args, **kwargs):
         # すでにログインしている場合はショップ画面へリダイレクト
         if request.user.is_authenticated:
-            return redirect(reverse('shop:index'))
+            return redirect(reverse('projects:index'))
 
         context = {
             'form': RegisterForm(),
@@ -53,7 +53,7 @@ class LoginView(View):
         """GETリクエスト用のメソッド"""
         # すでにログインしている場合はショップ画面へリダイレクト
         if request.user.is_authenticated:
-            return redirect(reverse('shop:index'))
+            return redirect(reverse('projects:index'))
 
         context = {
             'form': LoginForm(),
@@ -85,7 +85,7 @@ class LoginView(View):
         # フラッシュメッセージを画面に表示
         messages.info(request, "ログインしました。")
 
-        # ショップ画面にリダイレクト
+        # 案件一覧画面にリダイレクト
         return redirect(reverse('projects:index'))
 login = LoginView.as_view()
 

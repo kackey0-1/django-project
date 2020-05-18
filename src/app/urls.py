@@ -23,4 +23,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('shop/', include('shop.urls')),
     path('projects/', include('projects.urls')),
+    path('chat/', include('chat.urls', namespace='chat')), # 追加
 ]

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import sys
+# import pymysql
 from app.settings.common import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -70,8 +71,7 @@ LOGGING = {
     }
 }
 
-
-
+# pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -98,3 +98,13 @@ SHELL_PLUS = "ipython"
 IPYTHON_ARGUMENTS = [
   '--profile-dir', '/code/ipython_profile'
 ]
+
+# Redisの設定
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [('redis', 6379)]
+        }
+    }
+}

@@ -9,7 +9,8 @@
         "email": "hogehoge1@sample.com",
         "is_staff": 1,
         "is_active": 1,
-        "date_joined": "2020-05-16 15:28:41.078265"
+        "date_joined": "2020-05-16 15:28:41.078265",
+        "client_id": 1
       }
     },
     {
@@ -22,7 +23,8 @@
           "email": "hogehoge2@sample.com",
           "is_staff": 1,
           "is_active": 1,
-          "date_joined": "2020-05-16 15:28:41.078265"
+          "date_joined": "2020-05-16 15:28:41.078265",
+          "client_id": 1
         }
     },
     {
@@ -35,7 +37,8 @@
           "email": "hogehoge3@sample.com",
           "is_staff": 1,
           "is_active": 1,
-          "date_joined": "2020-05-16 15:28:41.078265"
+          "date_joined": "2020-05-16 15:28:41.078265",
+          "client_id": 1
         }
     }
   ]
