@@ -17,5 +17,6 @@ class Message(models.Model):
         on_delete=models.CASCADE
     )
     name = models.CharField(max_length=50)
+    user = models.ForeignKey('accounts.CustomUser', models.DO_NOTHING, related_name='Message_user')
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)

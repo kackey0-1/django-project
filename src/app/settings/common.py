@@ -177,25 +177,28 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'log/debug.log',
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': '/logs/debug.log',
+            'when': 'D',       # this specifies the interval
+            'interval': 1,     # defaults to 1, only necessary for other values 
+            'backupCount': 10, # how many backup file to keep, 10 days
         },
     },
     'loggers': {
         'parso': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
         'daphne': {
             'handlers': ['file'],
-            'level': 'DEBUG'
+            'level': 'INFO'
         },
     },
     'root': {
         'handlers': ['file'],
-        'level': 'DEBUG',
+        'level': 'INFO',
     }
 }
 

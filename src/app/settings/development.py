@@ -47,10 +47,12 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': '/logs/debug.log',
-            'formatter': 'verbose'
+            'when': 'D',       # this specifies the interval
+            'interval': 1,     # defaults to 1, only necessary for other values 
+            'backupCount': 10, # how many backup file to keep, 10 days
         },
     },
     'loggers': {

@@ -126,5 +126,5 @@ class ProfileView(LoginRequiredMixin, View):
 
         # フラッシュメッセージを画面に表示
         messages.info(request, "プロフィールを更新しました。")
-        return redirect('/accounts/profile/')
+        return redirect(reverse('accounts:profile'))
 profile = ProfileView.as_view()
