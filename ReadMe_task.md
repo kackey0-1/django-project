@@ -1,0 +1,10 @@
+## 課題
+- choicesの導入
+    1. a
+- cacheサーバーの導入
+    1. 1
+- django-roleの導入を推進すること
+    1. あ
+- chatにユーザーモデルの導入
+    1. roomにusersフィールドを入れること(manytomany)
+    2. messageにuserフィールドを入れること(foreignkey)
