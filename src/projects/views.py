@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 from projects.models import Project
 from projects.forms import EntryForm
-from projects.modules import ProjectModules as p
+from app.modules import ProjectsModules as p
 
 # Create your views here.
 class IndexView(LoginRequiredMixin, View):
@@ -30,7 +30,7 @@ class PutView(LoginRequiredMixin, View):
         context = {
             'form': EntryForm(),
         }
-        return render(request, 'projects/project_entry.html', context)
+        return render(request, 'projects/project_detail.html', context)
 
     def post(self, request, *args, **kwargs):
         logger.info("You're in post!!!")
@@ -47,7 +47,7 @@ class PutView(LoginRequiredMixin, View):
         # バリデーション
         if not form.is_valid():
             # バリデーションNGの場合:登録画面のテンプレートを再表示
-            return render(request, 'projects/test_entry.html', {'form': form})
+            return render(request, 'projects/project_detail.html', {'form': form})
         # 保存する前に一旦取り出す
         project = form.save(commit=False)
         # proejct 保存

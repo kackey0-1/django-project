@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'projects.apps.ProjectsConfig',
     'chat.apps.ChatConfig',
+    'applications.apps.ApplicationsConfig',
+    'engineers.apps.EngineersConfig',
 ]
 
 MIDDLEWARE = [

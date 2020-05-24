@@ -5,8 +5,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Project, Client
 
-# CLIENT_LIST = Client.objects.filter(deleted_at=None)
-
 class EntryForm(forms.ModelForm):
     """案件登録画面用のフォーム"""
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)

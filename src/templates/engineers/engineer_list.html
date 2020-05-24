@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}案件一覧{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+    .container > .grid {
+        height: 100%;
+    }
+
+    .table {
+        max-width: 400px;
+    }
+
+    .ui.grid > .column {
+        padding-top: 0.3em !important;
+        padding-bottom: 0.3em !important;
+    }
+
+    p.red.message {
+        color: #db2828;
+        margin: 0.8em 0 0 0.8em;
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form method="get" action="{% url 'projects:index' %}" class="ui form">
+    <div class="ui stacked segment">
+        <div class="field">
+            <div class="ui input">
+                <input type="text" name="keyword" placeholder="キーワード" value="{{ keyword|default:'' }}">
+            </div>
+        </div>
+        <button type="submit" class="ui fluid teal submit button">検索</button>
+        <a href="{% url 'engineers:put' %}"><button type="button" class="ui fluid teal submit button">新規</button></a>
+    </div>
+</form>
+
+<div class="ui four cards">
+    {% for engineer in engineer_list %}
+    <div class="ui card">
+        <div class="content">
+            <div class="ui divided list">
+                <span class="item">
+                    <div class="ui horizontal label">エンジニア名前</div> <a href="{{ engineer.id }}">{{ engineer.username }}</a>
+                </span>
+                <span class="item">
+                    <div class="ui horizontal label">メール</div>{{ engineer.email }}
+                </span>
+                <span class="item">
+                    <div class="ui horizontal label">電話</div>{{ engineer.tel }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+[
+    {
+      "model": "engineers.Partner",
+      "pk": 1,
+      "fields": {
+            "name": "取引先01",
+            "url": "https://sample.com",
+            "email": "hogehoge1@sample.com",
+            "tel": "00000000001",
+            "postcode": "0000001",
+            "state": "東京",
+            "city": "東京",
+            "street": "新宿ミロード",
+            "building": "新宿バスタ",
+            "created_id": 1,
+            "created_at": "2020-05-16T16:16:41+09:00",
+            "updated_id": 1,
+            "updated_at": "2020-05-16T16:16:41+09:00"
+      }
+    },
+    {
+        "model": "engineers.Partner",
+        "pk": 2,
+        "fields": {
+              "name": "取引先02",
+              "url": "https://sample.com",
+              "email": "hogehoge2@sample.com",
+              "tel": "00000000002",
+              "postcode": "0000002",
+              "state": "大阪",
+              "city": "大阪",
+              "street": "淀屋橋ミロード",
+              "building": "淀屋橋バスタ",
+              "created_id": 1,
+              "created_at": "2020-05-16T16:16:41+09:00",
+              "updated_id": 1,
+              "updated_at": "2020-05-16T16:16:41+09:00"
+        }
+    }
+]
