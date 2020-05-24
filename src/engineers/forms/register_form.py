@@ -7,7 +7,7 @@ from accounts.models import CustomUser
 from engineers.models import Skill
 
 
-class RegisterForm(forms.ModelForm):
+class EntryForm(forms.ModelForm):
     """ユーザー登録画面用のフォーム"""
     # formfield: https://docs.djangoproject.com/en/3.0/ref/forms/fields/
     # widget: https://docs.djangoproject.com/en/3.0/ref/forms/widgets/#selectmultiple
@@ -58,7 +58,7 @@ class RegisterForm(forms.ModelForm):
         label='所有資格',
         required=True,
         queryset=Skill.objects,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'})
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
     )
 
     def __init__(self, *args, **kwargs):

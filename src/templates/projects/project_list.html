@@ -35,7 +35,8 @@
                 <input type="text" name="keyword" placeholder="キーワード" value="{{ keyword|default:'' }}">
             </div>
         </div>
-        <button type="submit" class="ui fluid teal submit button">hogehoge</button>
+        <button type="submit" class="ui fluid teal submit button">検索</button>
+        <a href="{% url 'projects:put' %}"><button type="button" class="ui fluid teal submit button">新規案件登録</button></a>
     </div>
 </form>
 

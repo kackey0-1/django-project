@@ -41,10 +41,13 @@ def _set_modifier(targetModel,user_id):
         pass
 
 """ 案件作成/更新 """
-def save_project(project, user_id, client_id):
+def save_project(form, user_id, client_id):
+    # 保存する前に一旦取り出す
+    project = form.save(commit=False)
     _set_modifier(project, user_id)
     project.client_id = client_id
     project.save()
+    form.save_m2m()
 
 """ 案件削除 """
 def delete_project(project, user_id):

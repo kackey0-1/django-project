@@ -1,7 +1,7 @@
 [
     {
       "model": "accounts.CustomUser",
-      "pk": 1,
+      "pk": 2,
       "fields": {
             "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
             "is_superuser": 1,
@@ -16,7 +16,7 @@
     },
     {
         "model": "accounts.CustomUser",
-        "pk": 2,
+        "pk": 3,
         "fields": {
             "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
             "username": "partner-user1",
@@ -30,7 +30,7 @@
     },
     {
         "model": "accounts.CustomUser",
-        "pk": 3,
+        "pk": 4,
         "fields": {
             "password": "argon2$argon2i$v=19$m=512,t=2,p=2$VjRMbVBwZVBZNlht$iBOkujF1wLsC57hcl9DadA",
             "username": "partner-user2",

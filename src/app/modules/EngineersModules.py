@@ -30,20 +30,6 @@ def getEngineer(user_id):
         raise Http404("Project Id={} Not Found".format(user_id))
     return engineer
 
-# ''' 作成/更新 timestamp/id '''
-# def _set_modifier(targetModel,user_id):
-#     now = datetime.datetime.now()
-#     # idが存在するなら
-#     if not targetModel.id:
-#         targetModel.created_id = user_id
-#         targetModel.created_at = now
-#     # update_idが存在するなら
-#     try:
-#         targetModel.updated_id = user_id
-#         targetModel.updated_at = now
-#     except FieldDoesNotExist:
-#         pass
-
 # """ 案件作成/更新 """
 def save_user(form, partner_id):
     # 保存する前に一旦取り出す

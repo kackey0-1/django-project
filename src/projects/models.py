@@ -7,11 +7,12 @@ class Project(models.Model):
         db_table = 'projects'
 
     name          = models.CharField(verbose_name='案件名', max_length=255)
-    description   = models.CharField(verbose_name='案件詳細', max_length=255)
+    description   = models.TextField(verbose_name='案件詳細', max_length=2000)
     skills        = models.ManyToManyField('engineers.Skill', blank=True, verbose_name='資格')
     location      = models.CharField(verbose_name='現場', max_length=255)
-    project_start = models.DateTimeField(verbose_name='案件開始日')
-    project_end   = models.DateTimeField(verbose_name='案件開始日')
+    project_date  = models.DateField(verbose_name='案件日')
+    start_time    = models.TimeField(verbose_name='開始時刻', blank=True, null=True)
+    end_time      = models.TimeField(verbose_name='終了時刻', blank=True, null=True)
     client        = models.ForeignKey('projects.Client', models.DO_NOTHING, null=True, blank=True, verbose_name='顧客')
     partners      = models.ManyToManyField('engineers.Partner', blank=True, verbose_name='取引先')
     engineers     = models.ManyToManyField('accounts.CustomUser', blank=True, verbose_name='技術者')

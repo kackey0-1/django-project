@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views import View
 from app.modules import EngineersModules as e
 
-from .forms.register_form import RegisterForm
+from .forms.register_form import EntryForm
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ index = IndexView.as_view()
 class PutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
-            'form': RegisterForm(),
+            'form': EntryForm(),
         }
         return render(request, 'engineers/engineer_detail.html', context)
 
@@ -37,14 +37,13 @@ class PutView(LoginRequiredMixin, View):
         if request.POST['id']:
             # 更新処理の場合
             engineer = e.getEngineer(request.POST['id'])
-            form = RegisterForm(request.POST, instance=engineer)
+            form = EntryForm(request.POST, instance=engineer)
         else:
             # 新規処理の場合
-            form = RegisterForm(request.POST)
+            form = EntryForm(request.POST)
         # バリデーション:バリデーションNGの場合 エンジニア登録画面のテンプレートを再表示
         if not form.is_valid():
             return render(request, 'engineers/engineer_detail.html', {'form': form})
-
         e.save_user(form, request.user.client_id)
         return redirect('engineers:index')
 put = PutView.as_view()
@@ -52,7 +51,7 @@ put = PutView.as_view()
 class DetailView(LoginRequiredMixin, View):
     def get(self, request, user_id, *args, **kwargs):
         engineer = e.getEngineer(user_id)
-        form = RegisterForm(None, instance=engineer)
+        form = EntryForm(None, instance=engineer)
         context = {
             'form': form,
         }

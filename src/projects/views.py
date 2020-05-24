@@ -48,10 +48,8 @@ class PutView(LoginRequiredMixin, View):
         if not form.is_valid():
             # バリデーションNGの場合:登録画面のテンプレートを再表示
             return render(request, 'projects/project_detail.html', {'form': form})
-        # 保存する前に一旦取り出す
-        project = form.save(commit=False)
         # proejct 保存
-        project = p.save_project(project, user_id, client_id)
+        project = p.save_project(form, user_id, client_id)
         return redirect("projects:index")
 put = PutView.as_view()
 
