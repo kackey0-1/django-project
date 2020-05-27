@@ -1,6 +1,7 @@
 ## ディレクトリ説明
 基本的にソースコードはsrc配下の物を編集する。
 ※ 他ファイルはDockerのコンテナを立ち上げるに必要なものになるので、基本的に編集は行わない
+https://github.com/GiriB/django-gentelella.git
 
 # .envの準備
 その後src/.envの内容を編集する
