@@ -57,9 +57,13 @@
                 {% csrf_token %}
                 <button type="submit" class="ui fluid teal submit button" formaction="{% url 'projects:put' %}" formmethod="post">保存</button>
                 {% if form.id.value %}
-                    <button type="submit" class="ui fluid teal submit button" formaction="{% url 'projects:detail' form.id.value %}" formmethod="post">削除</button>
+                    
                 {% endif %}
             </div>
+        </form>
+        <form id="project_apply">
+            <button type="submit" class="ui fluid teal submit button" formaction="{% url 'projects:apply' %}" formmethod="post">申請</button>
+            <input type="hidden" name="project_id" value="{{ form.id }}" >
         </form>
     </div>
 </div>

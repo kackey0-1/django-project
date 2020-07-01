@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('put/', views.put, name='put'),
     path('<int:project_id>/', views.detail, name='detail'),
-    # path('/', views.checkout, name='checkout'),
+    path('apply/', views.apply, name='apply'),
 ]

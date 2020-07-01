@@ -8,8 +8,8 @@ import datetime
 import logging
 logger = logging.getLogger()
 
-""" 検索機能 """
 def search(keyword):
+    """ 検索機能 """
     if keyword:
         queryset = CustomUser.objects.filter(
             Q(deleted_at=None)

@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
@@ -33,7 +34,6 @@ class PutView(LoginRequiredMixin, View):
         return render(request, 'projects/project_detail.html', context)
 
     def post(self, request, *args, **kwargs):
-        logger.info("You're in post!!!")
         user_id = request.user.id
         client_id = request.user.client_id
         # リクエストからフォームを作成
@@ -68,3 +68,11 @@ class DetailView(LoginRequiredMixin, View):
         p.delete_project(project, request.user.id)
         return redirect("projects:index")
 detail = DetailView.as_view()
+
+@login_required
+def apply(request):
+    user_id = request.POST['user_id']
+    project_id = request.POST['project_id']
+    p.apply_project(project_id, user_id)
+    return redirect("projects:index")
+
