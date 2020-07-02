@@ -13,7 +13,7 @@ Django - チャットアプリデモ - {{ room.name }}
 {% for message in messages %}
     <div class="chat-box">
         <div class="chat-header">
-            名前：{{message.name}}
+            名前：{{message.user.username}}
         </div>
         <div class="chat-body">
             {{message.content}}
@@ -25,7 +25,6 @@ Django - チャットアプリデモ - {{ room.name }}
 
 <div class="chat-room-footer">
     <div class="send-msg">
-        <input placeholder="名前を入力" id="name" value=""/>
         <input placeholder="メッセージを入力" id="msg" value=""/><button id="send">送信</button>
     </div>
 </div>
@@ -33,18 +32,11 @@ Django - チャットアプリデモ - {{ room.name }}
 </div>
 
 <script>
-const url = 'ws://192.168.33.10:8000/ws/' + '{{room.name}}'
+const url = 'ws://{{ chat_domain }}/ws/' + '{{room.name}}'
 var ws = new WebSocket(url)
 
-document.getElementById("send").onclick = function sendMessage () {
-    var sendData = {
-        name: document.getElementById('name').value,
-        message: document.getElementById('msg').value
-    }
-    ws.send(JSON.stringify(sendData))
-}
-
 ws.onmessage = e => {
+    console.log("connected")
     var receiveData = JSON.parse(e.data)
     var messageBox = document.createElement('div')
     messageBox.className = 'chat-box'
@@ -52,6 +44,13 @@ ws.onmessage = e => {
     var body = '<div class="chat-body">' + receiveData.message + '</div>'
     document.getElementById('footer').insertAdjacentHTML('beforebegin', header + body)
     document.getElementById('footer').appendChild(messageBox)
+}
+
+document.getElementById("send").onclick = function sendMessage () {
+    var sendData = {
+        message: document.getElementById('msg').value
+    }
+    ws.send(JSON.stringify(sendData))
 }
 
 </script>

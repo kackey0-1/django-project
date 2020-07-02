@@ -33,7 +33,7 @@
             {% endfor %}
 
             {% csrf_token %}
-            <button type="submit" formaction="{% url 'projects:put' %}" formmethod="post">保存</button>
+            <button type="submit" formaction="{% url 'projects:create' %}" formmethod="post">保存</button>
         </div>
     </form>
 {% endblock %}

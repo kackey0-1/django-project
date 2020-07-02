@@ -7,27 +7,31 @@ from django.core.exceptions import FieldDoesNotExist
 
 import datetime
 import logging
+
 logger = logging.getLogger()
+
 
 def search(keyword):
     if keyword:
         queryset = Project.objects.filter(
             Q(deleted_at=None)
             & (Q(name__icontains=keyword)
-                | Q(description__icontains=keyword)
-            )
+               | Q(description__icontains=keyword)
+               )
         )
     else:
-        queryset = Project.objects.all().filter(Q(deleted_at=None))[:100]    
+        queryset = Project.objects.all().filter(Q(deleted_at=None))[:100]
     return queryset
 
-def getProject(project_id):
+
+def get_project(project_id):
     project = Project.objects.filter(Q(id=project_id) & Q(deleted_at=None)).first()
     if not project:
         raise Http404("Project Id={} Not Found".format(project_id))
     return project
 
-def _set_modifier(targetModel,user_id):
+
+def _set_modifier(targetModel, user_id):
     """
         作成/更新 timestamp id
     """
@@ -43,17 +47,19 @@ def _set_modifier(targetModel,user_id):
     except FieldDoesNotExist:
         pass
 
-def save_project(form, user_id, client_id):
+
+def save_project(form, user):
     """ 
         案件作成/更新
         保存する前に一旦取り出す
     """
-    
     project = form.save(commit=False)
-    _set_modifier(project, user_id)
-    project.client_id = client_id
+    _set_modifier(project, user.id)
+    project.client_id = user.client_id
     project.save()
     form.save_m2m()
+    return project
+
 
 def delete_project(project, user_id):
     """
@@ -65,11 +71,10 @@ def delete_project(project, user_id):
     project.save()
 
 
-def apply_project(project_id, user_id):
+def apply_project(project_id, user):
     """
         案件申請
     """
-    project = getProject(project_id)
-    user = CustomUserModules.getUser(user_id)
+    project = get_project(project_id)
     project.engineers.add(user)
     project.save()

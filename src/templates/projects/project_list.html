@@ -8,11 +8,11 @@
     <form method="get" action="{% url 'projects:index' %}">
         <input type="text" name="keyword" placeholder="キーワード" value="{{ keyword|default:'' }}">
         <button type="submit">検索</button>
-        <a href="{% url 'projects:put' %}"><button type="button">新規案件登録</button></a>
+        <a href="{% url 'projects:create' %}"><button type="button">新規案件登録</button></a>
     </form>
     {% for project in project_list %}
         <br>
-        <h6><a href="{{ project.id }}">{{ project.name }}</a></h6>
+        <h6><a href="{% url 'projects:detail' project.id %}">{{ project.name }}</a></h6>
         <p>{{ project.description }}</p>
     {% endfor %}
 {% endblock %}

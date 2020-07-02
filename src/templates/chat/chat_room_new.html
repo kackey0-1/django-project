@@ -1,0 +1,97 @@
+{% load static %}
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chat/bmesse.css' %}">
+    {% endblock %}
+
+    <title>チャットサンプル</title>
+</head>
+<body>
+    <div id="your_container">
+        <!-- チャットの外側部分① -->
+        <div id="bms_messages_container">
+            <!-- ヘッダー部分② -->
+            <div id="bms_chat_header">
+                <!--ステータス-->
+                <div id="bms_chat_user_status">
+                    <!--ステータスアイコン-->
+                    <div id="bms_status_icon">●</div>
+                    <!--ユーザー名-->
+                    <div id="bms_chat_user_name">ユーザー</div>
+                </div>
+            </div>
+
+            <!-- タイムライン部分③ -->
+            <div id="bms_messages">
+                {% for message in messages %}
+                    {% if message.user.username == username %}
+                    <!--メッセージ１（左側）-->
+                    <div class="bms_message bms_right">{{message.user.username}}:
+                        <div class="bms_message_box">
+                            <div class="bms_message_content">
+                                <div class="bms_message_text">{{message.content}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bms_clear"></div><!-- 回り込みを解除（スタイルはcssで充てる） -->
+                    {% else %}
+                    <!--メッセージ２（右側）-->
+                    <div class="bms_message bms_left">{{message.user.username}}:
+                        <div class="bms_message_box">
+                            <div class="bms_message_content">
+                                <div class="bms_message_text">{{ message.content }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bms_clear"></div><!-- 回り込みを解除（スタイルはcssで充てる） -->
+                    {% endif %}
+                {% endfor %}
+            </div>
+    
+            <!-- テキストボックス、送信ボタン④ -->
+            <div id="bms_send">
+                <textarea id="bms_send_message" value=""></textarea>
+                <div id="bms_send_btn">送信</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const url = 'ws://{{ chat_domain }}/ws/' + '{{room.name}}'
+var ws = new WebSocket(url)
+var username = '{{ username }}'
+
+ws.onmessage = e => {
+    var receiveData = JSON.parse(e.data);
+    var body = ''
+    if (username === receiveData.name) {
+        body = '<div class="bms_message bms_right">'+ receiveData.name +':';
+    } else {
+        body = '<div class="bms_message bms_left">'+ receiveData.name +':';
+    }
+
+    body += '<div class="bms_message_box">';
+    body += '<div class="bms_message_content">';
+    body += '<div class="bms_message_text">'+ receiveData.message +'</div>';
+    body += '</div>';
+    body += '</div>';
+    body += '</div>';
+    body += '<div class="bms_clear"></div>';
+    var div = document.createElement('div');
+    div.innerHTML = body; //html要素に変換
+    document.getElementById('bms_messages').appendChild(div);
+}
+
+document.getElementById("bms_send_btn").onclick = function sendMessage () {
+    var sendData = {
+        message: document.getElementById('bms_send_message').value
+    }
+    ws.send(JSON.stringify(sendData))
+}
+
+</script>
+</body>
+</html>

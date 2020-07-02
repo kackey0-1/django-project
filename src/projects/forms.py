@@ -10,11 +10,13 @@ from engineers.models import Partner, Skill
 
 class EntryForm(forms.ModelForm):
     """案件登録用のフォーム"""
+
     class Meta:
         # 利用するモデルクラスを指定
-        model = CustomUser
+        model = Project
         # 利用するモデルのフィールドを指定
-        fields = ('username', 'password', 'last_name', 'first_name', 'email', 'tel', 'description', 'skills',)
+        fields = (
+            'name', 'description', 'skills', 'location', 'project_date', 'start_time', 'end_time', 'partners')
 
     name = forms.CharField(
         label='案件名',
@@ -73,9 +75,10 @@ class EditForm(forms.ModelForm):
 
     class Meta:
         # 利用するモデルクラスを指定
-        model = CustomUser
+        model = Project
         # 利用するモデルのフィールドを指定
-        fields = ('id', 'username', 'password', 'last_name', 'first_name', 'email', 'tel', 'description', 'skills',)
+        fields = (
+            'id', 'name', 'description', 'skills', 'location', 'project_date', 'start_time', 'end_time', 'partners')
 
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
     name = forms.CharField(

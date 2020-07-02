@@ -110,3 +110,5 @@ CHANNEL_LAYERS = {
         }
     }
 }
+
+CHAT_DOMAIN = 'localhost:8000'
