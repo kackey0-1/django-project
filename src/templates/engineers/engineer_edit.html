@@ -4,14 +4,14 @@
 {% block page_title %}新規ユーザー登録{% endblock %}
 
 {% block content %}
-    <h2>案件詳細</h2>
-    <form>
-        <div>
+    <h2>エンジニア登録</h2>
+    <form action="{% url 'engineers:put' %}" method="post" class="ui form">
+        <div class="ui stacked segment">
             {# --- 全体エラーメッセージ --- #}
             {% if form.non_field_errors %}
-            <div>
-                <div>エラー</div>
-                <ul>
+            <div class="ui red message">
+                <div class="header">エラー</div>
+                <ul class="list">
                     {% for non_field_error in form.non_field_errors %}
                     <li>{{ non_field_error }}</li>
                     {% endfor %}
@@ -31,12 +31,8 @@
                 {% endif %}
             </div>
             {% endfor %}
-
             {% csrf_token %}
-            <button type="submit" formaction="{% url 'projects:put' %}" formmethod="post">保存</button>
-            {% if form.id.value %}
-                <button type="submit" formaction="{% url 'projects:detail' form.id.value %}" formmethod="post">削除</button>
-            {% endif %}
+            <button type="submit" class="ui fluid teal submit button">エンジニア登録</button>
         </div>
-    </form>
+        </form>
 {% endblock %}

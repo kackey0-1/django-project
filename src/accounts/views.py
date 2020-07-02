@@ -45,6 +45,8 @@ class RegisterView(View):
         auth_login(request, user)
 
         return redirect(settings.LOGIN_REDIRECT_URL)
+
+
 register = RegisterView.as_view()
 
 
@@ -87,6 +89,8 @@ class LoginView(View):
 
         # 案件一覧画面にリダイレクト
         return redirect(reverse('projects:index'))
+
+
 login = LoginView.as_view()
 
 
@@ -102,6 +106,8 @@ class LogoutView(View):
         messages.info(request, "ログアウトしました。")
 
         return redirect(reverse('accounts:login'))
+
+
 logout = LogoutView.as_view()
 
 
@@ -127,4 +133,6 @@ class ProfileView(LoginRequiredMixin, View):
         # フラッシュメッセージを画面に表示
         messages.info(request, "プロフィールを更新しました。")
         return redirect(reverse('accounts:profile'))
+
+
 profile = ProfileView.as_view()

@@ -1,70 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}新規ユーザー登録{% endblock %}
-
-{% block extra_css %}
-    <style type="text/css">
-        .container > .grid {
-          height: 100%;
-        }
-        .column {
-            max-width: 400px;
-        }
-        p.red.message {
-            color: #db2828;
-            margin: 0.8em 0 0 0.8em;
-            text-align: left;
-        }
-    </style>
-{% endblock %}
+{% block page_title %}案件詳細{% endblock %}
 
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <h2 class="ui teal image header">
-            <img src="{% static 'images/logo.png' %}" class="image">
-            <div class="content">案件詳細</div>
-        </h2>
-
-        <form class="ui form">
-            <div class="ui stacked segment">
-                {# --- 全体エラーメッセージ --- #}
-                {% if form.non_field_errors %}
-                <div class="ui red message">
-                    <div class="header">エラー</div>
-                    <ul class="list">
-                        {% for non_field_error in form.non_field_errors %}
-                        <li>{{ non_field_error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-
-                {% for field in form %}
-                <div class="field{% if field.errors %} error{% endif %}">
-                    {# --- 入力フィールド --- #}
-                    <div class="ui input{% if field.errors %} error{% endif %}">
-                        {{ field }}
-                    </div>
-                    {# --- 入力フィールドごとのエラーメッセージ（最初のエラーのみを表示） --- #}
-                    {% if field.errors %}
-                    <p class="red message">{{ field.errors.0 }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-                {% csrf_token %}
-                <button type="submit" class="ui fluid teal submit button" formaction="{% url 'projects:put' %}" formmethod="post">保存</button>
-                {% if form.id.value %}
-                    
-                {% endif %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">案件詳細</h1>
             </div>
-        </form>
-        <form id="project_apply">
-            <button type="submit" class="ui fluid teal submit button" formaction="{% url 'projects:apply' %}" formmethod="post">申請</button>
-            <input type="hidden" name="project_id" value="{{ form.id }}" >
-        </form>
+            <div class="card-body">
+                <div class="row float-right">
+                    <button type="button" class="btn btn-outline-primary mr-2 my-2">更新</button>
+                    <button type="button" class="btn btn-outline-primary mr-2 my-2">削除</button>
+                </div>
+                <table class="table table-striped table-bordered">
+                    <tbody class="">
+                        <tr>
+                            <th>プロジェクト名</th>
+                            <td>{{ project.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>プロジェクト概要</th>
+                            <td>{{ project.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}

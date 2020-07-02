@@ -6,11 +6,11 @@ https://github.com/GiriB/django-gentelella.git
 # .envの準備
 その後src/.envの内容を編集する
 ### developmentの場合
-```
-DJANGO_SETTINGS_MODULE=config.settings.local
+```bash
+DJANGO_SETTINGS_MODULE=config.settings.development
 ```
 ### productionの場合
-```
+```bash
 DJANGO_SETTINGS_MODULE=config.settings.production
 ```
 
@@ -18,11 +18,12 @@ DJANGO_SETTINGS_MODULE=config.settings.production
 ```bash
 docker-compose run python python manage.py migrate
 docker-compose run python python manage.py shell -c "from django.contrib.auth import get_user_model; get_user_model().objects.create_superuser('admin', 'admin@example.com', 'adminpass');"
+
 # データ作成
 # fixtures Timezone問題: https://docs.djangoproject.com/en/dev/topics/i18n/timezones/#fixtures
-docker-compose run python python manage.py loaddata custom_user.json
 docker-compose run python python manage.py loaddata clients.json
 docker-compose run python python manage.py loaddata partners.json
+docker-compose run python python manage.py loaddata custom_user.json
 docker-compose run python python manage.py loaddata skills.json
 docker-compose run python python manage.py loaddata projects.json
 ```
@@ -35,7 +36,7 @@ DockerでDjangoを作る時に使うレポジトリです。
 ファーストステップとして、dockerファイルからコンテナを立ち上げる。
 Docker起動は、作業中のディレクトリにはいり、下記を実行致します。
 
-```
+```bash
 $ docker-compose up -d --build
 ```
 
@@ -46,7 +47,7 @@ $ docker-compose up -d --build
 2. fixturesフォルダの中に"{テーブル名}.json"を作成する
 3. 下記コマンドを実行する
 
-```
+```bash
 $ docker-compose run python python manage.py loaddata {テーブル名ファイル}.json
 ```
 

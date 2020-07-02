@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}新規ユーザー登録{% endblock %}
+{% block page_title %}新規作成{% endblock %}
 
 {% block content %}
-    <h2>案件詳細</h2>
+    <h2>案件作成</h2>
     <form>
         <div>
             {# --- 全体エラーメッセージ --- #}
@@ -34,9 +34,6 @@
 
             {% csrf_token %}
             <button type="submit" formaction="{% url 'projects:put' %}" formmethod="post">保存</button>
-            {% if form.id.value %}
-                <button type="submit" formaction="{% url 'projects:detail' form.id.value %}" formmethod="post">削除</button>
-            {% endif %}
         </div>
     </form>
 {% endblock %}

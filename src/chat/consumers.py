@@ -14,6 +14,7 @@ import logging
 
 logger = logging.getLogger()
 
+
 class ChatConsumer(AsyncWebsocketConsumer):
     groups = ['broadcast']
 
@@ -41,7 +42,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         try:
             # login the user to this session.
-            await login(self.scope, user)
+            await login(self.scope, self.user)
             # save the session (if the session backend does not access the db you can use `sync_to_async`)
             await database_sync_to_async(self.scope["session"].save)()
             logger.info("websocket logged in by user_id={}".format(self.user))
