@@ -6,6 +6,9 @@ uwsgi==2.0.17
 boto3==1.13.8.*
 django-debug-toolbar==2.2.*
 django-extensions==2.2.*
+pygraphviz
+pydotplus
+
 # for production
 django-environ==0.4.*
 # PyMySQL==0.9.3
@@ -17,7 +20,6 @@ env-file==2019.4.13
 argon2-cffi==19.2.0
 django-bootstrap4==1.1.1
 reportlab==3.5.42
-PyPDF2==1.26.0
 svglib==1.0.0
 django-model-utils==4.0.0
 

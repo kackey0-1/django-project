@@ -16,9 +16,6 @@ class IndexView(LoginRequiredMixin, View):
         return render(request, 'chat/index.html', context)
 
 
-index = IndexView.as_view()
-
-
 class ChatView(LoginRequiredMixin, View):
     def get(self, request, room_name, *args, **kwargs):
         messages = Message.objects.filter(room__name=room_name).order_by('created_at')[:50]
@@ -32,9 +29,6 @@ class ChatView(LoginRequiredMixin, View):
         return render(request, 'chat/chat_room_new.html', context)
 
 
-chat = ChatView.as_view()
-
-
 class RoomView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         name = request.POST.get("room_name")
@@ -42,4 +36,6 @@ class RoomView(LoginRequiredMixin, View):
         return redirect(reverse('chat:chat_room', args=[name]))
 
 
+index = IndexView.as_view()
+chat = ChatView.as_view()
 room = RoomView.as_view()

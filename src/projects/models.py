@@ -1,9 +1,9 @@
 from django.db import models
 
-""" Project Table """
-
 
 class Project(models.Model):
+    """ Project Table """
+
     class Meta(object):
         db_table = 'projects'
 
@@ -16,7 +16,7 @@ class Project(models.Model):
     end_time = models.TimeField(verbose_name='終了時刻', blank=True, null=True)
     client = models.ForeignKey('projects.Client', models.DO_NOTHING, null=True, blank=True, verbose_name='顧客')
     partners = models.ManyToManyField('engineers.Partner', blank=True, verbose_name='取引先')
-    engineers = models.ManyToManyField('accounts.CustomUser', blank=True, verbose_name='技術者')
+    applications = models.ManyToManyField('Application', blank=True, verbose_name='申請')
     created_at = models.DateTimeField(verbose_name='作成日付')
     created = models.ForeignKey('accounts.CustomUser', models.DO_NOTHING, related_name='Project_created',
                                 verbose_name='作成者')
@@ -31,10 +31,18 @@ class Project(models.Model):
         return self.name
 
 
-""" Client Table """
+class Application(models.Model):
+    """ Application Table """
+    class Meta(object):
+        db_table = 'applications'
+
+    status = models.IntegerField(verbose_name='ステータス')
+    engineer = models.ForeignKey('accounts.CustomUser', models.DO_NOTHING, blank=True, verbose_name='技術者')
 
 
 class Client(models.Model):
+    """ Client Table """
+
     class Meta(object):
         db_table = 'clients'
 

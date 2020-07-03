@@ -1,4 +1,8 @@
-FROM python:3.6
+FROM python:3
+RUN apt-get update
+RUN apt-get -y install locales && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+RUN apt-get install -y libgraphviz-dev graphviz pkg-config
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code

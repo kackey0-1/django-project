@@ -20,7 +20,6 @@ sys.dont_write_bytecode = True
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_NAME = os.path.basename(BASE_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -36,7 +35,6 @@ ALLOWED_HOSTS = ['*']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,16 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
+    'django_extensions',
     # XXX: chat function
     'channels',
 
     # My applications
     'accounts.apps.AccountsConfig',
-    'shop.apps.ShopConfig',
     'projects.apps.ProjectsConfig',
     'chat.apps.ChatConfig',
-    'applications.apps.ApplicationsConfig',
     'engineers.apps.EngineersConfig',
 ]
 
@@ -69,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 ROOT_URLCONF = 'app.urls'
 
@@ -91,7 +86,7 @@ TEMPLATES = [
                 'calc': 'app.modules.filters.common_filter.calc',
             },
             'builtins': [
-               'bootstrap4.templatetags.bootstrap4',
+                'bootstrap4.templatetags.bootstrap4',
             ]
         },
     },
@@ -126,7 +121,6 @@ PASSWORD_HASHERS = [
 ##################
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -144,7 +138,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -157,7 +150,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -173,7 +165,6 @@ LOGIN_REDIRECT_URL = '/accounts/profile'
 # ログアウト後のリダイレクト先
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -182,9 +173,9 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': '/logs/debug.log',
-            'when': 'D',       # this specifies the interval
-            'interval': 1,     # defaults to 1, only necessary for other values 
-            'backupCount': 10, # how many backup file to keep, 10 days
+            'when': 'D',  # this specifies the interval
+            'interval': 1,  # defaults to 1, only necessary for other values
+            'backupCount': 10,  # how many backup file to keep, 10 days
         },
     },
     'loggers': {

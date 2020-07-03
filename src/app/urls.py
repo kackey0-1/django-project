@@ -20,9 +20,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url='accounts/login'), name='login'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('shop/', include('shop.urls')),
     path('projects/', include('projects.urls')),
     path('chat/', include('chat.urls', namespace='chat')), # 追加
     path('engineers/', include('engineers.urls')), # 追加
-    path('applications/', include('applications.urls')), # 追加
 ]
