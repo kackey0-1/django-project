@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import Group
 
 class Project(models.Model):
     """ Project Table """
@@ -8,15 +8,15 @@ class Project(models.Model):
         db_table = 'projects'
 
     name = models.CharField(verbose_name='案件名', max_length=255)
-    description = models.TextField(verbose_name='案件詳細', max_length=2000)
-    skills = models.ManyToManyField('engineers.Skill', blank=True, verbose_name='資格')
+    description = models.TextField(verbose_name='案件概要', max_length=2000)
+    skills = models.TextField(verbose_name='資格', max_length=2000)
     location = models.CharField(verbose_name='現場', max_length=255)
     project_date = models.DateField(verbose_name='案件日')
     start_time = models.TimeField(verbose_name='開始時刻', blank=True, null=True)
     end_time = models.TimeField(verbose_name='終了時刻', blank=True, null=True)
     client = models.ForeignKey('projects.Client', models.DO_NOTHING, null=True, blank=True, verbose_name='顧客')
     partners = models.ManyToManyField('engineers.Partner', blank=True, verbose_name='取引先')
-    applications = models.ManyToManyField('Application', blank=True, verbose_name='申請')
+    status = models.IntegerField(verbose_name="ステータス")
     created_at = models.DateTimeField(verbose_name='作成日付')
     created = models.ForeignKey('accounts.CustomUser', models.DO_NOTHING, related_name='Project_created',
                                 verbose_name='作成者')
@@ -37,6 +37,7 @@ class Application(models.Model):
         db_table = 'applications'
 
     status = models.IntegerField(verbose_name='ステータス')
+    project = models.ForeignKey('projects.Project', models.DO_NOTHING, blank=True, verbose_name='案件')
     engineer = models.ForeignKey('accounts.CustomUser', models.DO_NOTHING, blank=True, verbose_name='技術者')
 
 

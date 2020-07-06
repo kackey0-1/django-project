@@ -1,9 +1,9 @@
-from django.conf import settings
 from django.http import Http404
 from django.db.models import Q
-from projects.models import Project
-from app.modules import CustomUserModules
+from projects.models import Project, Application
+from app.enums.status import ApplicationStatus
 from django.core.exceptions import FieldDoesNotExist
+from django.db import transaction
 
 import datetime
 import logging
@@ -71,10 +71,3 @@ def delete_project(project, user_id):
     project.save()
 
 
-def apply_project(project_id, user):
-    """
-        案件申請
-    """
-    project = get_project(project_id)
-    project.engineers.add(user)
-    project.save()

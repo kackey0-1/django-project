@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.signals import user_logged_in
 
 
 class CustomUser(AbstractUser):
@@ -24,6 +23,9 @@ class CustomUser(AbstractUser):
         # ログイン回数を増やす
         self.login_count += 1
         self.save()
+
+    def required_group(self, group_name):
+        return self.groups.filter(name=group_name).exists()
 
 # def update_login_count(sender, user, **kwargs):
 #     """

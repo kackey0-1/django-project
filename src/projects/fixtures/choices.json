@@ -1,0 +1,68 @@
+[
+    {
+      "model": "projects.Choice",
+      "pk": 1,
+      "fields": {
+        "code": 1,
+        "level": 0,
+        "value": 0,
+        "label": "進捗状況",
+        "sort_order": 0
+      }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 2,
+        "fields": {
+          "code": 1,
+          "level": 1,
+          "value": 0,
+          "label": "キャンセル",
+          "sort_order": 1
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 3,
+        "fields": {
+        "code": 1,
+        "level": 1,
+        "value": 1,
+        "label": "申請中",
+        "sort_order": 2
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 4,
+        "fields": {
+            "code": 1,
+            "level": 1,
+            "value": 2,
+            "label": "申請承認",
+            "sort_order": 3
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 5,
+        "fields": {
+            "code": 1,
+            "level": 1,
+            "value": 3,
+            "label": "受注",
+            "sort_order": 4
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 6,
+        "fields": {
+            "code": 1,
+            "level": 1,
+            "value": 4,
+            "label": "受注失敗",
+            "sort_order": 5
+        }
+    }
+]

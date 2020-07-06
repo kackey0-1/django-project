@@ -8,11 +8,8 @@ class SitePermissionMiddleware(object):
 
     def __call__(self, request):
         # リクエストへの前処理をここに記述
-
         response = self.get_response(request)
-
         # レスポンスへの後処理をここに記述
-
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):

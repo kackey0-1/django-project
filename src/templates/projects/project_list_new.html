@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block page_title %}案件一覧{% endblock %}
+
+{% block content %}
+{% include "projects/project_search.html" %}
+
+<div class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">案件一覧</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover bg-light text-break">
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td width="20%">
+                        <a href="{% url 'projects:detail' project.id %}"><strong>案件名: </strong> {{ project.name }}</a>
+                    </td>
+                    <td width="80%">
+                        <strong>会社: </strong>{{ project.client.name }}<br>
+                        <strong>概要: </strong>{{ project.description }}<br>
+                        <strong>必要資格: </strong>{{ project.skills }}
+                    </td>
+                </tr>
+                {% endfor %}
+             </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

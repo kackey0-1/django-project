@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django_extensions',
     # XXX: chat function
     'channels',
-
     # My applications
     'accounts.apps.AccountsConfig',
     'projects.apps.ProjectsConfig',
@@ -82,8 +81,9 @@ TEMPLATES = [
                 'django.template.context_processors.static',
             ],
             'libraries': {
-                'parse': 'app.modules.filters.common_filter.parse',
-                'calc': 'app.modules.filters.common_filter.calc',
+                'parse': 'app.modules.filters.parse',
+                'calc': 'app.modules.filters.calc',
+                'permissions': 'app.modules.filters.permissions',
             },
             'builtins': [
                 'bootstrap4.templatetags.bootstrap4',

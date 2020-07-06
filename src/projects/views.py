@@ -7,6 +7,7 @@ from django.views.generic import View
 
 from projects.forms import EntryForm, EditForm
 from app.modules import ProjectsModules as p
+from app.modules import ApplicationsModules as a
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +18,9 @@ class IndexView(LoginRequiredMixin, View):
         queryset = p.search(keyword)
         context = {
             'keyword': keyword,
-            'project_list': queryset,
+            'projects': queryset,
         }
-        return render(request, 'projects/project_list.html', context)
+        return render(request, 'projects/project_list_new.html', context)
 
 
 class CreateView(LoginRequiredMixin, View):
@@ -45,9 +46,11 @@ class CreateView(LoginRequiredMixin, View):
 class DetailView(LoginRequiredMixin, View):
     def get(self, request, project_id, *args, **kwargs):
         project = p.get_project(project_id)
+        applications = a.get_applications(project_id)
         context = {
             'project': project,
-            'engineers': project.engineers.all()
+            'skills': project.skills.all(),
+            'applications': applications
         }
         return render(request, 'projects/project_detail.html', context)
 
@@ -87,5 +90,12 @@ edit = EditView.as_view()
 @login_required
 def apply(request, project_id):
     user = request.user
-    p.apply_project(project_id, user)
+    a.apply_project(project_id, user)
+    return redirect("projects:detail", project_id)
+
+
+@login_required
+def cancel(request, project_id):
+    user = request.user
+    a.cancel_project(project_id, user)
     return redirect("projects:detail", project_id)
