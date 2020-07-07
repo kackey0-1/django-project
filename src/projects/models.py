@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import Group
+
 
 class Project(models.Model):
     """ Project Table """
@@ -33,6 +33,7 @@ class Project(models.Model):
 
 class Application(models.Model):
     """ Application Table """
+
     class Meta(object):
         db_table = 'applications'
 

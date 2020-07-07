@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
+{% block title %} Page 403 {% endblock title %}
+
 {% block content %}
-パーミッションでぃないど
-{% endblock %}
+  <div class="col-md-12">
+    <div class="col-middle">
+      <div class="text-center text-center">
+        <h1 class="error-number">403</h1>
+        <h2>Access Denied</h2>
+         <p>Full authentication is required to access this resource.</p>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

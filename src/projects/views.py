@@ -20,7 +20,7 @@ class IndexView(LoginRequiredMixin, View):
             'keyword': keyword,
             'projects': queryset,
         }
-        return render(request, 'projects/project_list_new.html', context)
+        return render(request, 'projects/project_list.html', context)
 
 
 class CreateView(LoginRequiredMixin, View):
@@ -49,7 +49,6 @@ class DetailView(LoginRequiredMixin, View):
         applications = a.get_applications(project_id)
         context = {
             'project': project,
-            'skills': project.skills.all(),
             'applications': applications
         }
         return render(request, 'projects/project_detail.html', context)
