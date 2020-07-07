@@ -31,10 +31,11 @@ class EntryForm(forms.ModelForm):
         strip=False,
         widget=forms.Textarea(attrs={'placeholder': '案件詳細'}),
     )
-    skills = forms.ModelMultipleChoiceField(
-        label='資格',
-        queryset=Skill.objects,
-        widget=forms.SelectMultiple()
+    skills = forms.CharField(
+        label='必要資格',
+        max_length=255,
+        required=True,
+        widget=forms.TextInput(attrs={'data-target': 'modal1', 'placeholder': '必要資格'}),
     )
     location = forms.CharField(
         label='場所',
@@ -50,12 +51,12 @@ class EntryForm(forms.ModelForm):
     start_time = forms.TimeField(
         label='開始時刻',
         required=True,
-        widget=forms.TimeInput(attrs={'placeholder': '開始時刻', 'type': 'time'}),
+        widget=forms.TimeInput(attrs={'placeholder': '開始時刻', 'type': 'time', 'value': ':00'}),
     )
     end_time = forms.TimeField(
         label='終了時刻',
         required=True,
-        widget=forms.TimeInput(attrs={'placeholder': '終了時刻', 'type': 'time'}),
+        widget=forms.TimeInput(attrs={'placeholder': '終了時刻', 'type': 'time', 'value': ':00'}),
     )
     partners = forms.ModelMultipleChoiceField(
         label='取引先',
@@ -67,7 +68,10 @@ class EntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+            if field.label == '必要資格':
+                field.widget.attrs['class'] = 'form-control modal_open'
+            else:
+                field.widget.attrs['class'] = 'form-control'
 
 
 class EditForm(forms.ModelForm):

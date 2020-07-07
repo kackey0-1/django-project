@@ -1,16 +1,9 @@
-<head>
-      <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-      <script src="func.js"></script>
-</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/modal/modal.css' %}">
 <body>
-    <div id="demoslide01" class="main_visual bg_aaa">
-    <p><a data-target="modal1" class="modal_open">クリックするとモーダルウィンドウが開きます</a></p>
-    </div>
-
-     
     <!-- モーダル1 -->
     <div id="modal1" class="modal_box">
-    <h2>ウィンドウ1</h2>
+    <h2>資格一覧</h2>
     <p>モーダルウィンドウが開きました。</p>
      
     <div class="link_area">
@@ -22,3 +15,4 @@
      
     <p><a class=><i class="zmdi zmdi-close"></i></a></p>
 </body>
+

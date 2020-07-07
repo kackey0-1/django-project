@@ -17,11 +17,6 @@ li {
   font-size: 18px;
 }
 
-.modal_open {
-  margin: 3vw;
-  display: inline-block;
-}
-
 .modal_box {
   position: fixed;
   display: none;
