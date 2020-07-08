@@ -8,10 +8,10 @@
         <div class="card-body">
             <div class="float-right">
                 {% if request.user|has_group:'partner_manager' and project|is_open %}
-                <button type="submit" form="approve-ordered" formaction="{% url 'projects:approve' %}" class="btn btn-outline-primary mr-2 my-2">承認</button>
+                <button type="submit" form="approve-ordered" formaction="{% url 'projects:approve' %}" formmethod="post" class="btn btn-outline-primary mr-2 my-2">承認</button>
                 {% endif %}
                 {% if request.user|has_group:'client_user' and project|is_open %}
-                <button type="submit" form="approve-ordered" formaction="{% url 'projects:ordered' %}" class="btn btn-outline-primary mr-2 my-2">案件依頼</button>
+                <button type="submit" form="approve-ordered" formaction="{% url 'projects:ordered' %}" formmethod="post" class="btn btn-outline-primary mr-2 my-2">案件依頼</button>
                 {% endif %}
             </div>
             <table class="table table-striped table-bordered table-hover">
