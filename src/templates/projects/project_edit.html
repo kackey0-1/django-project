@@ -1,39 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}編集{% endblock %}
+{% block page_title %}新規作成{% endblock %}
 
 {% block content %}
-    <h2>案件編集</h2>
-    <form>
-        <div>
-            {# --- 全体エラーメッセージ --- #}
-            {% if form.non_field_errors %}
-            <div>
-                <div>エラー</div>
-                <ul>
-                    {% for non_field_error in form.non_field_errors %}
-                    <li>{{ non_field_error }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-
+<div class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">案件作成</h3>
+    </div>
+    {# --- 全体エラーメッセージ --- #}
+    {% if form.non_field_errors %}
+    <div>エラー</div>
+    <ul>
+        {% for non_field_error in form.non_field_errors %}
+        <li>{{ non_field_error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+   <div class="card-body">
+        <form class="form" role="form" autocomplete="off">
             {% for field in form %}
-            <div class="field{% if field.errors %} error{% endif %}">
-                {# --- 入力フィールド --- #}
-                <div class="ui input{% if field.errors %} error{% endif %}">
+            <div class="form-group row">
+                {% if field != form.id %}
+                <label class="col-lg-3 col-form-label form-control-label">{{ field.label }}</label>
+                <div class="col-lg-9">
                     {{ field }}
                 </div>
+                {% endif %}
                 {# --- 入力フィールドごとのエラーメッセージ（最初のエラーのみを表示） --- #}
                 {% if field.errors %}
-                <p class="red message">{{ field.errors.0 }}</p>
+                <label class="col-lg-3 col-form-label form-control-label"></label>
+                <p class="col-lg-9 text-danger">{{ field.errors.0 }}</p>
                 {% endif %}
             </div>
             {% endfor %}
-
             {% csrf_token %}
-            <button type="submit" formaction="{% url 'projects:edit' form.id.value %}" formmethod="post">保存</button>
-        </div>
-    </form>
+            <div class="float-right">
+                <button type="submit" class="btn btn-primary"　formaction="{% url 'projects:edit' form.id.value %}" formmethod="post">保存</button>
+            </div>
+        </form>
+   </div>
+</div>
+{% include "common/skills_modal.html" %}
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/modal/modal.js' %}"></script>
 {% endblock %}

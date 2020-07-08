@@ -5,7 +5,8 @@
     "fields": {
         "name": "プロジェクト名1",
         "description": "プロジェクト概要1",
-        "skills": [1, 2],
+        "status": 0,
+        "skills": "資格1",
         "location": "location1",
         "project_date": "2020-05-16",
         "start_time": "16:00",
@@ -24,7 +25,8 @@
     "fields": {
         "name": "プロジェクト名2",
         "description": "プロジェクト概要2",
-        "skills": [1, 2],
+        "status": 0,
+        "skills": "資格1",
         "location": "location2",
         "project_date": "2020-05-16",
         "start_time": "16:00",
@@ -43,7 +45,8 @@
     "fields": {
         "name": "プロジェクト名3",
         "description": "プロジェクト概要3",
-        "skills": [],
+        "status": 0,
+        "skills": "資格1",
         "location": "location3",
         "project_date": "2020-05-16",
         "start_time": "16:00",

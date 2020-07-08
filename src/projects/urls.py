@@ -10,4 +10,6 @@ urlpatterns = [
     path('edit/<int:project_id>', views.edit, name='edit'),
     path('apply/<int:project_id>', views.apply, name='apply'),
     path('cancel/<int:project_id>', views.cancel, name='cancel'),
+    path('approve', views.approve, name='approve'),
+    path('ordered', views.ordered, name='ordered'),
 ]

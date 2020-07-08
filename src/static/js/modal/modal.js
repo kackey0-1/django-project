@@ -32,12 +32,18 @@ $(function () {
             $(".modal_box").fadeOut();
             $(".modal_bg").fadeOut("slow", function () {
               $(".modal_bg").remove();
-            });
-          });
+             });
+        });
+    });
 
-        // ウィンドウがリサイズされたらモーダルの位置を再計算する
-        $(window).on("resize", function () {
-          modalResize();
+    $("#_skills_choose").click(function(){
+        var values = $('._skill:checked').map(function() {
+            return $(this).val();
+        }).get();
+        $("#_skill_val").val(values.join(","))
+        $(".modal_box").fadeOut();
+        $(".modal_bg").fadeOut("slow", function () {
+            $(".modal_bg").remove();
         });
     });
 });

@@ -3,16 +3,30 @@
 <body>
     <!-- モーダル1 -->
     <div id="modal1" class="modal_box">
-    <h2>資格一覧</h2>
-    <p>モーダルウィンドウが開きました。</p>
-     
-    <div class="link_area">
-    <p class="modal_link"><a data-target="modal2" class="modal_switch"><span>ウィンドウ2へ</span></a></p>
+    <div class="card card-outline-secondary">
+        <div class="card-header">
+            <h3 class="mb-0">資格一覧</h3>
+        </div>
+            <div class="card-body">
+                <div class="float-right">
+                    <button type="button" id="_skills_choose" class="btn btn-outline-primary mr-2 my-2">選択</button>
+                </div>
+                <table class="table table-bordered table-hover bg-light text-break">
+                    <tbody>
+                        {% for skill in skills %}
+                        <tr>
+                            <td width="20%">
+                                <input class="_skill" type="checkbox" value="{{ skill.1 }}" >
+                            </td>
+                            <td width="80%">
+                                {{ skill.1 }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-     
-    <p><a class="modal_close"><i class="zmdi zmdi-close"></i></a></p>
-    </div>
-     
-    <p><a class=><i class="zmdi zmdi-close"></i></a></p>
 </body>
 

@@ -35,7 +35,7 @@ class EntryForm(forms.ModelForm):
         label='必要資格',
         max_length=255,
         required=True,
-        widget=forms.TextInput(attrs={'data-target': 'modal1', 'placeholder': '必要資格'}),
+        widget=forms.TextInput(attrs={'data-target': 'modal1', 'id': '_skill_val', 'placeholder': '必要資格'}),
     )
     location = forms.CharField(
         label='場所',
@@ -67,6 +67,7 @@ class EntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # TODO 修正したい
         for field in self.fields.values():
             if field.label == '必要資格':
                 field.widget.attrs['class'] = 'form-control modal_open'
@@ -98,10 +99,11 @@ class EditForm(forms.ModelForm):
         strip=False,
         widget=forms.Textarea(attrs={'placeholder': '案件詳細'}),
     )
-    skills = forms.ModelMultipleChoiceField(
-        label='資格',
-        queryset=Skill.objects,
-        widget=forms.SelectMultiple()
+    skills = forms.CharField(
+        label='必要資格',
+        max_length=255,
+        required=True,
+        widget=forms.TextInput(attrs={'data-target': 'modal1', 'id': '_skill_val', 'placeholder': '必要資格'}),
     )
     location = forms.CharField(
         label='場所',
@@ -133,5 +135,9 @@ class EditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # TODO 修正したい
         for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+            if field.label == '必要資格':
+                field.widget.attrs['class'] = 'form-control modal_open'
+            else:
+                field.widget.attrs['class'] = 'form-control'

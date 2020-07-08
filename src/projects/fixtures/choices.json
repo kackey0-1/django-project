@@ -64,5 +64,71 @@
             "label": "受注失敗",
             "sort_order": 5
         }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 7,
+        "fields": {
+            "code": 2,
+            "level": 0,
+            "value": 0,
+            "label": "スキル",
+            "sort_order": 0
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 8,
+        "fields": {
+            "code": 2,
+            "level": 1,
+            "value": 0,
+            "label": "資格1",
+            "sort_order": 0
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 9,
+        "fields": {
+            "code": 2,
+            "level": 1,
+            "value": 1,
+            "label": "資格2",
+            "sort_order": 1
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 10,
+        "fields": {
+            "code": 2,
+            "level": 1,
+            "value": 2,
+            "label": "資格3",
+            "sort_order": 2
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 11,
+        "fields": {
+            "code": 2,
+            "level": 1,
+            "value": 3,
+            "label": "資格4",
+            "sort_order": 3
+        }
+    },
+    {
+        "model": "projects.Choice",
+        "pk": 12,
+        "fields": {
+            "code": 2,
+            "level": 1,
+            "value": 4,
+            "label": "資格5",
+            "sort_order": 4
+        }
     }
 ]

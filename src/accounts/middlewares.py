@@ -28,10 +28,9 @@ class SitePermissionMiddleware(object):
         if request.path.startswith(admin_index):
             if not has_site_permission:
                 raise PermissionDenied
-
+        request.user.has_site_permission = has_site_permission
         if request.user.is_authenticated:
             _permission_check(request)
-        request.user.has_site_permission = has_site_permission
 
 
 def _permission_check(request):
@@ -51,7 +50,7 @@ def _permission_check(request):
         projects: apply cancel create edit
     """
     if request.user.has_group(PermissionGroups.PartnerManager.value):
-        paths = ["/projects/apply", "/projects/cancel", "/projects/create", "/projects/edit"]
+        paths = ["/projects/create", "/projects/edit"]
         for path in paths:
             if request.path.startswith(path):
                 raise PermissionDenied

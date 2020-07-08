@@ -8,9 +8,6 @@ class CustomUser(AbstractUser):
     class Meta(object):
         db_table = 'custom_user'
 
-    def has_group(self, group_name):
-        return self.groups.filter(name=group_name).exists()
-
     # 標準フィールド(AbstractUser)
     # https://docs.djangoproject.com/en/3.0/ref/contrib/auth/#fields
     # カスタムフィールド
@@ -27,7 +24,7 @@ class CustomUser(AbstractUser):
         self.login_count += 1
         self.save()
 
-    def required_group(self, group_name):
+    def has_group(self, group_name):
         return self.groups.filter(name=group_name).exists()
 
 # def update_login_count(sender, user, **kwargs):

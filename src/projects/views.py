@@ -4,10 +4,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.db import transaction
 
 from projects.forms import EntryForm, EditForm
 from app.modules import ProjectsModules as p
 from app.modules import ApplicationsModules as a
+from app.modules.ChoiceModules import get_choice_list, ChoiceCode
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +27,10 @@ class IndexView(LoginRequiredMixin, View):
 
 class CreateView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        skills = get_choice_list(code=ChoiceCode.SKILL)
         context = {
             'form': EntryForm(),
+            'skills': skills,
         }
         return render(request, 'projects/project_create.html', context)
 
@@ -67,9 +71,9 @@ class EditView(LoginRequiredMixin, View):
         }
         return render(request, 'projects/project_edit.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, project_id, *args, **kwargs):
         user = request.user
-        project = p.get_project(request.POST['id'])
+        project = p.get_project(project_id)
         # リクエストからフォームを作成
         form = EditForm(request.POST, instance=project)
         if not form.is_valid():
@@ -90,6 +94,28 @@ edit = EditView.as_view()
 def apply(request, project_id):
     user = request.user
     a.apply_project(project_id, user)
+    return redirect("projects:detail", project_id)
+
+
+@login_required
+def approve(request):
+    user_id = request.user.id
+    project_id = request.POST.get('project_id')
+    engineer_ids = request.POST.getlist('engineers')
+    with transaction.atomic:
+        a.ordered_application(project_id, engineer_ids)
+        p.ordered_project(project_id, user_id)
+    return redirect("projects:detail", project_id)
+
+
+@login_required
+def ordered(request):
+    user_id = request.user.id
+    project_id = request.POST.get('project_id')
+    engineer_ids = request.POST.getlist('engineers')
+    with transaction.atomic():
+        a.ordered_application(project_id, engineer_ids)
+        p.ordered_project(project_id, user_id)
     return redirect("projects:detail", project_id)
 
 

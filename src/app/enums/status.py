@@ -5,13 +5,11 @@ class ApplicationStatus(Enum):
     CANCELED = 0
     APPLY = 1
     APPLY_CONFIRMED = 2
-    ACCEPTING_ORDER = 3
-    FAILED_ORDER = 4
+    ORDERED = 3
+    NOT_ORDERED = 4
 
 
 class ProjectStatus(Enum):
-    CANCELED = 0
-    APPLY = 1
-    APPLY_CONFIRMED = 2
-    ACCEPTING_ORDER = 3
-    FAILED_ORDER = 4
+    OPEN = 0
+    CANCELED = 1
+    CLOSED = 2

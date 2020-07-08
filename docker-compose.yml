@@ -35,7 +35,6 @@ services:
 
   python:
       build: ./python
-      command: sh /tmp/django_exec.sh
       volumes:
         - ./src:/code
         - ./src/static:/static

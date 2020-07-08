@@ -1,9 +1,8 @@
 from django.http import Http404
 from django.db.models import Q
-from projects.models import Project, Application
-from app.enums.status import ApplicationStatus
+from projects.models import Project
+from app.enums.status import ProjectStatus
 from django.core.exceptions import FieldDoesNotExist
-from django.db import transaction
 
 import datetime
 import logging
@@ -56,6 +55,7 @@ def save_project(form, user):
     project = form.save(commit=False)
     _set_modifier(project, user.id)
     project.client_id = user.client_id
+    project.status = ProjectStatus.OPEN.value
     project.save()
     form.save_m2m()
     return project
@@ -66,8 +66,14 @@ def delete_project(project, user_id):
         案件削除 
     """
     now = datetime.datetime.now()
+    project.status = ProjectStatus.CANCELED.value
     project.deleted_at = now
     project.deleted_id = user_id
     project.save()
 
 
+def ordered_project(project_id, user_id):
+    project = get_project(project_id)
+    _set_modifier(project, user_id)
+    project.status = ProjectStatus.CLOSED.value
+    project.save()
