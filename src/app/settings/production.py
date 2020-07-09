@@ -71,3 +71,5 @@ SHELL_PLUS = "ipython"
 IPYTHON_ARGUMENTS = [
   '--profile-dir', '/code/ipython_profile'
 ]
+
+CHAT_DOMAIN = 'localhost:8000'

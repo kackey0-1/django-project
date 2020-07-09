@@ -102,7 +102,7 @@ def approve(request):
     user_id = request.user.id
     project_id = request.POST.get('project_id')
     engineer_ids = request.POST.getlist('engineers')
-    with transaction.atomic:
+    with transaction.atomic():
         a.ordered_application(project_id, engineer_ids)
         p.ordered_project(project_id, user_id)
     return redirect("projects:detail", project_id)

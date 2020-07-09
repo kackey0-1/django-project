@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  nginx:
+      image: nginx:1.13
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./nginx/conf:/etc/nginx/conf.d
+        - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+        - ./src/static:/static
+        - ./logs/nginx:/var/log/nginx
+      depends_on:
+        - python
+
   redis:
     image: redis:alpine
     expose:
@@ -22,21 +34,20 @@ services:
         - ./sql:/docker-entrypoint-initdb.d
 
   python:
-      build:
-        context: ./python
-        dockerfile: dev.Dockerfile
+      build: ./python
       volumes:
         - ./src:/code
+        - ./src/static:/static
         - ./logs/django:/logs
         - ./deploy:/tmp
       environment:
         AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
         AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
         AWS_DEFAULT_REGION: ap-northeast-1
-        AWS_DEFAULT_OUTPUT: json 
-      ports:
-        - "8000:8000"
-        - "3001:3001"
+        AWS_DEFAULT_OUTPUT: json
+      expose:
+        - "8001"
+        - "3001"
       depends_on:
         - db
         - redis

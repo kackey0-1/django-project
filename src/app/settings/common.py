@@ -11,32 +11,33 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import sys
 
-# これでキャッシュファイルが生成されなくなる？らしい
-sys.dont_write_bytecode = True
-
+###############
+# Build paths #
+###############
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_NAME = os.path.basename(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'c72f8m&)w6f(63cfr-7-jpm^n50a_u+)uh1r7)!w&pzmu5=9s('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 本番稼働時にはセキュリティ面を考慮して必ずこの DEBUG を False にしておくこと
 # DEBUG = True
-DEBUG = False
 
+############
+# Security #
+############
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
-
+#################
+# Core settings #
+#################
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,8 +95,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
-# XXX: chat function
 ASGI_APPLICATION = 'app.routing.application'
+
+############
+# Database #
+############
+DATABASES = {}
 
 CACHES = {
     'default': {
@@ -107,6 +112,16 @@ CACHES = {
         }
     }
 }
+
+############
+# Messages #
+############
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+###########
+# Logging #
+###########
+LOGGING = {}
 
 # パスワードハッシュ化設定
 PASSWORD_HASHERS = [
@@ -121,8 +136,16 @@ PASSWORD_HASHERS = [
 # Authentication #
 ##################
 AUTH_USER_MODEL = 'accounts.CustomUser'
+# ログインページURL
+LOGIN_URL = '/accounts/login/'
+# ログイン後のリダイレクト先
+LOGIN_REDIRECT_URL = '/accounts/profile'
+# ログアウト後のリダイレクト先
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
-# Password validation
+#######################
+# Password validation #
+#######################
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -139,7 +162,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+########################
+# Internationalization #
+########################
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'ja-JP'
@@ -152,58 +177,27 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+################
+# Static files #
+################
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
-# ログインページURL
-LOGIN_URL = '/accounts/login/'
-# ログイン後のリダイレクト先
-LOGIN_REDIRECT_URL = '/accounts/profile'
-# ログアウト後のリダイレクト先
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+###########
+# Logging #
+###########
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '/logs/debug.log',
-            'when': 'D',  # this specifies the interval
-            'interval': 1,  # defaults to 1, only necessary for other values
-            'backupCount': 10,  # how many backup file to keep, 10 days
-        },
-    },
-    'loggers': {
-        'parso': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'daphne': {
-            'handlers': ['file'],
-            'level': 'INFO'
-        },
-    },
-    'root': {
-        'handlers': ['file'],
-        'level': 'INFO',
-    }
-}
+LOGGING = {}
 
-# For Application Logic
+########################
+# Application settings #
+########################
+# humanize.intcomma
 # https://docs.djangoproject.com/en/3.0/ref/contrib/humanize/
 NUMBER_GROUPING = 3
-# TAX RATE(消費税計算用の定数)
-# decimalにて消費税計算を実装するため文字列として定義
-TAX_RATE = '0.1'
-PDF_PATH = "test-contents"
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000
 
 """
 # メール設定

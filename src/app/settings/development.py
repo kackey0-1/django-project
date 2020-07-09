@@ -21,8 +21,6 @@ SECRET_KEY = 'c72f8m&)w6f(63cfr-7-jpm^n50a_u+)uh1r7)!w&pzmu5=9s('
 # SECURITY WARNING: don't run with debug turned on in production!
 # 本番稼働時にはセキュリティ面を考慮して必ずこの DEBUG を False にしておくこと
 DEBUG = True
-# DEBUG = False
-# Application definition
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -31,40 +29,25 @@ DEBUG = True
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
     'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': '/logs/debug.log',
-            'when': 'D',       # this specifies the interval
-            'interval': 1,     # defaults to 1, only necessary for other values 
-            'backupCount': 10, # how many backup file to keep, 10 days
+            'when': 'D',  # this specifies the interval
+            'interval': 1,  # defaults to 1, only necessary for other values
+            'backupCount': 10,  # how many backup file to keep, 10 days
         },
     },
     'loggers': {
-        'django': {
+        'parso': {
             'handlers': ['file'],
             'level': 'DEBUG',
-            'propagate': True,
-        },
-        'parso': {
-            'handlers': ['console'],
-            'level': 'INFO',
             'propagate': False,
+        },
+        'daphne': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
         },
     },
     'root': {
@@ -72,6 +55,7 @@ LOGGING = {
         'level': 'DEBUG',
     }
 }
+
 
 # pymysql.install_as_MySQLdb()
 DATABASES = {
@@ -111,4 +95,4 @@ CHANNEL_LAYERS = {
     }
 }
 
-CHAT_DOMAIN = 'localhost:8000'
+CHAT_DOMAIN = 'localhost:3001'
