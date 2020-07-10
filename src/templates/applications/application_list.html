@@ -29,13 +29,23 @@
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         {% csrf_token %}
                         {% for application in applications %}
-                        <tr>
-                            <td><input type="checkbox" name="engineers" value="{{ application.engineer.id }}"></td>
-                            <td>{{ application.engineer.client.name }}</td>
-                            <td>{{ application.engineer.username }}</td>
-                            <td>{{ application.engineer.skills }}</td>
-                            <td>{{ application.engineer.description }}</td>
-                        </tr>
+                            {% if request.user|has_group:'client_user' and application|is_approved %}
+                            <tr>
+                                <td><input type="checkbox" name="engineers" value="{{ application.engineer.id }}"></td>
+                                <td>{{ application.engineer.client.name }}</td>
+                                <td>{{ application.engineer.username }}</td>
+                                <td>{{ application.engineer.skills }}</td>
+                                <td>{{ application.engineer.description }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td><input type="checkbox" name="engineers" value="{{ application.engineer.id }}"></td>
+                                <td>{{ application.engineer.client.name }}</td>
+                                <td>{{ application.engineer.username }}</td>
+                                <td>{{ application.engineer.skills }}</td>
+                                <td>{{ application.engineer.description }}</td>
+                            </tr>
+                            {% endif %}
                         {% endfor %}
                     </form>
                 </tbody>

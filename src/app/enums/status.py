@@ -4,7 +4,7 @@ from enum import Enum
 class ApplicationStatus(Enum):
     CANCELED = 0
     APPLY = 1
-    APPLY_CONFIRMED = 2
+    APPLY_APPROVED = 2
     ORDERED = 3
     NOT_ORDERED = 4
 

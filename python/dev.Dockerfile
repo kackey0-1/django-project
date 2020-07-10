@@ -12,4 +12,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 ADD . /code/
 CMD daphne --access-log /logs/daphne.log -b 0.0.0.0 -p 3001 --ping-interval 10 --ping-timeout 120 app.asgi:application
-CMD python manage.py runserver --noasgi  0.0.0.0:8000
+CMD python manage.py runserver --settings app.wsgi --noasgi  0.0.0.0:8000

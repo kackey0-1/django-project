@@ -40,7 +40,11 @@
    </div>
 </div>
 {% include "common/skills_modal.html" %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/modal/modal.css' %}">
 {% endblock %}
 {% block script %}
     <script type="text/javascript" src="{% static 'js/modal/modal.js' %}"></script>
 {% endblock %}
+{% endblock %}
+

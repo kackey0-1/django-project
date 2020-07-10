@@ -1,5 +1,5 @@
 from django import template
-from app.enums.status import ProjectStatus
+from app.enums.status import ProjectStatus, ApplicationStatus
 
 register = template.Library()
 
@@ -14,3 +14,8 @@ def has_group(user, group_name):
 def is_open(project):
     # https://stackoverflow.com/questions/34571880/how-to-check-in-template-if-user-belongs-to-a-group
     return project.status == ProjectStatus.OPEN.value
+
+
+@register.filter(name="is_approved")
+def is_approved(application):
+    return application.status == ApplicationStatus.APPLY_APPROVED.value

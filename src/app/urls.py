@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('projects/', include('projects.urls')),
-    path('chat/', include('chat.urls', namespace='chat')), # 追加
-    path('engineers/', include('engineers.urls')), # 追加
+    path('chat/', include('chat.urls', namespace='chat')),
+    path('engineers/', include('engineers.urls')),
 ]

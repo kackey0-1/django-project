@@ -25,14 +25,27 @@ DEBUG = True
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# Static File
+STATIC_ROOT = ''
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
+                    '/code/static']
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    # ログフォーマット
+    'formatters': {
+        # 開発用
+        'develop': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d '
+                      '%(message)s'
+        },
+    },
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
+            'formatter': 'develop',
             'filename': '/logs/debug.log',
             'when': 'D',  # this specifies the interval
             'interval': 1,  # defaults to 1, only necessary for other values
@@ -40,7 +53,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'parso': {
+        'django': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': False,
@@ -49,6 +62,12 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG'
         },
+        # 発行されるSQL文を出力するための設定
+        # 'django.db.backends': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG',
+        #     'propagate': False,
+        # },
     },
     'root': {
         'handlers': ['file'],
