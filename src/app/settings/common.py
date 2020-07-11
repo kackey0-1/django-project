@@ -88,6 +88,7 @@ TEMPLATES = [
                 'parse': 'app.modules.filters.parse',
                 'calc': 'app.modules.filters.calc',
                 'permissions': 'app.modules.filters.permissions',
+                'choice': 'app.modules.ChoiceModules',
             },
             'builtins': [
                 'bootstrap4.templatetags.bootstrap4',

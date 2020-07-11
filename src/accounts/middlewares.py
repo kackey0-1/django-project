@@ -61,7 +61,7 @@ def _permission_check(request):
         engineers: create delete
     """
     if request.user.has_group(PermissionGroups.PartnerEngineer.value):
-        paths = ["/projects/apply", "/projects/cancel", "/projects/create", "/projects/edit",
+        paths = ["/projects/create", "/projects/edit",
                  "/engineers/create", "/engineers/delete"]
         for path in paths:
             if request.path.startswith(path):

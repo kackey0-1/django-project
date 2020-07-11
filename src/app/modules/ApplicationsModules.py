@@ -5,6 +5,7 @@ from app.modules import ProjectsModules as p
 from app.enums.status import ApplicationStatus
 from app.modules.CommonUtils import divide_list
 
+
 def get_application(project_id, user_id):
     application = Application.objects.filter(Q(project_id=project_id) & Q(engineer_id=user_id)).first()
     return application
@@ -34,6 +35,18 @@ def cancel_project(project_id, user):
         application.delete()
 
 
+def approve_application(project_id, engineer_ids):
+    """
+        案件申請承認
+    """
+    # SQL in区制約回避のためリストを分割
+    divided_list = divide_list(engineer_ids)
+    for ids in divided_list:
+        Application.objects.filter(Q(project_id=project_id)
+                                   & Q(engineer_id__in=ids)) \
+            .update(status=ApplicationStatus.APPLY_APPROVED.value)
+
+
 def ordered_application(project_id, engineer_ids):
     """
         案件発注
@@ -42,7 +55,8 @@ def ordered_application(project_id, engineer_ids):
     divided_list = divide_list(engineer_ids)
     for ids in divided_list:
         Application.objects.filter(Q(project_id=project_id)
-                                   & Q(engineer_id__in=ids))\
+                                   & Q(engineer_id__in=ids)
+                                   & Q(status=ApplicationStatus.APPLY_APPROVED.value)) \
             .update(status=ApplicationStatus.ORDERED.value)
     # 受注できなかった申請については NOT_ORDER にて更新
     Application.objects.filter(Q(project_id=project_id)

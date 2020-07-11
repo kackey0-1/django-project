@@ -20,8 +20,7 @@ class IndexView(LoginRequiredMixin, View):
         queryset = p.search(keyword)
         context = {
             'keyword': keyword,
-            'projects': queryset,
-        }
+            'projects': queryset, }
         return render(request, 'projects/project_list.html', context)
 
 
@@ -30,8 +29,7 @@ class CreateView(LoginRequiredMixin, View):
         skills = get_choice_list(code=ChoiceCode.SKILL)
         context = {
             'form': EntryForm(),
-            'skills': skills,
-        }
+            'skills': skills, }
         return render(request, 'projects/project_create.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -53,8 +51,7 @@ class DetailView(LoginRequiredMixin, View):
         applications = a.get_applications(project_id)
         context = {
             'project': project,
-            'applications': applications
-        }
+            'applications': applications, }
         return render(request, 'projects/project_detail.html', context)
 
     def post(self, request, project_id, *args, **kwargs):
@@ -102,9 +99,7 @@ def approve(request):
     user_id = request.user.id
     project_id = request.POST.get('project_id')
     engineer_ids = request.POST.getlist('engineers')
-    with transaction.atomic():
-        a.ordered_application(project_id, engineer_ids)
-        p.ordered_project(project_id, user_id)
+    a.approve_application(project_id, engineer_ids)
     return redirect("projects:detail", project_id)
 
 
