@@ -16,6 +16,6 @@ def is_open(project):
     return project.status == ProjectStatus.OPEN.value
 
 
-@register.filter(name="is_approved")
-def is_approved(application):
-    return application.status == ApplicationStatus.APPLY_APPROVED.value
+@register.filter(name="is_approved_or_ordered")
+def is_approved_or_ordered(application):
+    return application.status == ApplicationStatus.APPLY_APPROVED.value or application.status == ApplicationStatus.ORDERED.value

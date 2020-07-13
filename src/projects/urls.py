@@ -12,4 +12,5 @@ urlpatterns = [
     path('cancel/<int:project_id>', views.cancel, name='cancel'),
     path('approve', views.approve, name='approve'),
     path('ordered', views.ordered, name='ordered'),
+    path('closed', views.closed, name='closed'),
 ]

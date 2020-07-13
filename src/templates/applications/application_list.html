@@ -12,6 +12,7 @@
                 {% endif %}
                 {% if request.user|has_group:'client_user' and project|is_open %}
                 <button type="submit" form="approve-ordered" formaction="{% url 'projects:ordered' %}" formmethod="post" class="btn btn-outline-primary mr-2 my-2">案件依頼</button>
+                <button type="submit" form="approve-ordered" formaction="{% url 'projects:closed' %}" formmethod="post" class="btn btn-outline-primary mr-2 my-2">案件締切</button>
                 {% endif %}
             </div>
             <table class="table table-striped table-bordered table-hover">
@@ -22,6 +23,7 @@
                         <th scope="col">名前</th>
                         <th scope="col">資格</th>
                         <th scope="col">詳細</th>
+                        <th>ステータス</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,21 +31,24 @@
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         {% csrf_token %}
                         {% for application in applications %}
-                            {% if request.user|has_group:'client_user' and application|is_approved %}
+                            {% if request.user|has_group:'client_user' and application|is_approved_or_ordered %}
                             <tr>
                                 <td><input type="checkbox" name="engineers" value="{{ application.engineer.id }}"></td>
                                 <td>{{ application.engineer.client.name }}</td>
                                 <td>{{ application.engineer.username }}</td>
                                 <td>{{ application.engineer.skills }}</td>
                                 <td>{{ application.engineer.description }}</td>
+                                <td>{{ application.status }}</td>
                             </tr>
-                            {% else %}
+                            {% endif %}
+                            {% if not request.user|has_group:'client_user' %}
                             <tr>
                                 <td><input type="checkbox" name="engineers" value="{{ application.engineer.id }}"></td>
                                 <td>{{ application.engineer.client.name }}</td>
                                 <td>{{ application.engineer.username }}</td>
                                 <td>{{ application.engineer.skills }}</td>
                                 <td>{{ application.engineer.description }}</td>
+                                <td>{{ application.status }}</td>
                             </tr>
                             {% endif %}
                         {% endfor %}

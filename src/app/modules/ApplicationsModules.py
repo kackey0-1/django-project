@@ -59,7 +59,7 @@ def ordered_application(project_id, engineer_ids):
                                    & Q(status=ApplicationStatus.APPLY_APPROVED.value)) \
             .update(status=ApplicationStatus.ORDERED.value)
     # 受注できなかった申請については NOT_ORDER にて更新
-    Application.objects.filter(Q(project_id=project_id)
-                               & Q(status__in=[ApplicationStatus.APPLY_APPROVED.value,
-                                               ApplicationStatus.APPLY.value])) \
-        .update(status=ApplicationStatus.NOT_ORDERED.value)
+    # Application.objects.filter(Q(project_id=project_id)
+    #                            & Q(status__in=[ApplicationStatus.APPLY_APPROVED.value,
+    #                                            ApplicationStatus.APPLY.value])) \
+    #     .update(status=ApplicationStatus.NOT_ORDERED.value)

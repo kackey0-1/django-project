@@ -95,6 +95,13 @@ def apply(request, project_id):
 
 
 @login_required
+def cancel(request, project_id):
+    user = request.user
+    a.cancel_project(project_id, user)
+    return redirect("projects:detail", project_id)
+
+
+@login_required
 def approve(request):
     user_id = request.user.id
     project_id = request.POST.get('project_id')
@@ -110,12 +117,17 @@ def ordered(request):
     engineer_ids = request.POST.getlist('engineers')
     with transaction.atomic():
         a.ordered_application(project_id, engineer_ids)
-        p.ordered_project(project_id, user_id)
+    transaction.commit()
     return redirect("projects:detail", project_id)
 
 
 @login_required
-def cancel(request, project_id):
-    user = request.user
-    a.cancel_project(project_id, user)
+def closed(request):
+    user_id = request.user.id
+    project_id = request.POST.get('project_id')
+    engineer_ids = request.POST.getlist('engineers')
+    with transaction.atomic():
+        a.ordered_application(project_id, engineer_ids)
+        p.ordered_project(project_id, user_id)
+    transaction.commit()
     return redirect("projects:detail", project_id)
